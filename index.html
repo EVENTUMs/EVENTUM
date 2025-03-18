@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Organización de eventos profesionales.">
+    <title>Organización de Eventos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Eventum</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Transformamos tu evento en una experiencia única</h2>
+            <p>Nos encargamos de cada detalle para que tu evento sea todo un éxito.</p>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>¿Quiénes somos?</h2>
+            <p>Somos una empresa con más de 10 años de experiencia en la organización de eventos. Nos especializamos en bodas, corporativos, conferencias, conciertos y más.</p>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Servicios</h2>
+            <div class="service">
+                <img src="img/Planificación-de-eventos.jpg" alt="Servicio 1">
+                <h3>Planificación de Eventos</h3>
+                <p>Nos encargamos de todo el proceso, solo selecciona a gusto.</p>
+            </div>
+            <div class="service">
+                <img src="img/ambientacion.jpg" alt="Servicio 2">
+                <h3>Decoración y Ambientación</h3>
+                <p>Diseñamos ambientes únicos y personalizados para cada tipo de evento.</p>
+            </div>
+            <div class="service">
+                <img src="img/logistica.jpg" alt="Servicio 3">
+                <h3>Logística</h3>
+                <p>Gestionamos la logística del evento para que todo salga según lo planeado.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>Galería de Eventos</h2>
+            <div class="gallery-images">
+                <img src="img/evento1.jpg" alt="Evento 1">
+                <img src="img/evento2.jpg" alt="Evento 2">
+                <img src="img/evento4.jpg" alt="Evento 3">
+                <img src="img/evento5.jpg" alt="Evento 4">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contacto</h2>
+            <form>
+                <label for="name">Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="email" placeholder="Tu correo" required>
+
+                <label for="message"></label>
+                <textarea id="message" name="message" placeholder="Tu mensaje..." required></textarea>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Eventum. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
