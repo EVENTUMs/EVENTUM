@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoración de Eventos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #f2d000; /* Dorado */
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            color: #f2d000; /* Dorado */
+            font-size: 1.5em;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bar {
+            margin-bottom: 30px;
+        }
+
+        .bar select {
+            width: 50%;
+            margin: 10px 0;
+        }
+
+        .footer {
+            background-color: #f2d000; /* Dorado */
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        Decorados y Ambientación
+    </header>
+
+    <div class="container">
+        <h2>Selecciona las opciones para tu evento:</h2>
+        
+        <div class="options-container">
+            <div class="bar">
+                <label for="bebidas">Bebidas:</label>
+                <select id="bebidas">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="sprite">Sprite</option>
+                    <option value="pepsi">Pepsi</option>
+                    <option value="coca-cola">Coca Cola</option>
+                    <option value="fanta">Fanta</option>
+                    <option value="seven-up">Seven Up</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-mantel">Color de Mantel:</label>
+                <select id="color-mantel">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-cortinas">Color de Cortinas:</label>
+                <select id="color-cortinas">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-alfombra">Color de Alfombra:</label>
+                <select id="color-alfombra">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-globos">Color de Globos:</label>
+                <select id="color-globos">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-apoya-vasos">Color de Apoya Vasos:</label>
+                <select id="color-apoya-vasos">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-sillas">Color de Sillas:</label>
+                <select id="color-sillas">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-almohadas">Color de Almohadas:</label>
+                <select id="color-almohadas">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-luces">Color de Luces:</label>
+                <select id="color-luces">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+
+            <div class="bar">
+                <label for="color-flores">Color de Flores Artificiales:</label>
+                <select id="color-flores">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="azul">Azul</option>
+                    <option value="amarillo">Amarillo</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="rosa">Rosa</option>
+                    <option value="naranja">Naranja</option>
+                    <option value="verde">Verde</option>
+                    <option value="violeta">Violeta</option>
+                    <option value="morado">Morado</option>
+                    <option value="turquesa">Turquesa</option>
+                    <option value="marrón">Marrón</option>
+                    <option value="negro">Negro</option>
+                    <option value="blanco">Blanco</option>
+                    <option value="gris">Gris</option>
+                    <option value="plateado">Plateado</option>
+                    <option value="dorado">Dorado</option>
+                    <option value="fucsia">Fucsia</option>
+                    <option value="lila">Lila</option>
+                    <option value="beige">Beige</option>
+                    <option value="celeste">Celeste</option>
+                    <option value="caqui">Caqui</option>
+                    <option value="púrpura">Púrpura</option>
+                </select>
+            </div>
+            
+            <div class="bar">
+                <label for="bebidas-alcoholicas">Bebidas Alcohólicas:</label>
+                <select id="bebidas-alcoholicas">
+                    <option value="ninguno">Ninguno</option>
+                    <option value="heineken">Heineken</option>
+                    <option value="quilmes">Quilmes</option>
+                    <option value="vino">Vino</option>
+                    <option value="vodka">Vodka</option>
+                    <option value="whisky">Whisky</option>
+                    <option value="caipirinha">Caipirinha</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; Decoración Del Evento</p>
+    </footer>
+
+</body>
+</html>
