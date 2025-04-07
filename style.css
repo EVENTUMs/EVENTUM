@@ -2,174 +2,179 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
-}
-
-header {
-    background-color: #333;
+    overflow-x: hidden;
+  }
+  
+  /* Botón del menú */
+  .menu-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: goldenrod;
+    color: black;
+    font-size: 24px;
+    border: 1;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 1001;
+    border-radius: 5px;
+  }
+  
+  /* Sidebar inicial (oculta a la izquierda) */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 220px;
+    height: 100%;
+    background-color: #d4af37;
+    color: white;
+    padding-top: 30px;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  .sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 15px 20px;
+  }
+  
+  .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s;
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: #444;
+  }
+  
+  /* Contenido principal */
+  .main-content {
+    padding: 20px;
+    margin-left: 0;
+  }
+  
+  header {
+    background-color: goldenrod;
     color: white;
     padding: 20px 0;
     text-align: center;
-}
-
-header .logo h1 {
+  }
+  
+  .logo h1 {
     font-size: 2.5rem;
-}
-
-header nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-header nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-header nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
-.hero {
+  }
+  
+  .hero {
     background-image: url('https://via.placeholder.com/1920x500');
     background-size: cover;
     background-position: center;
-    color: rgba(54, 54, 54, 0.637);
+    color: rgba(54, 54, 54, 0.9);
     text-align: center;
     padding: 100px 0;
-}
-
-.hero-content h2 {
+  }
+  
+  .hero-content h2 {
     font-size: 3rem;
     margin-bottom: 20px;
-}
-
-.hero-content p {
+  }
+  
+  .hero-content p {
     font-size: 1.5rem;
-}
-
-section {
+  }
+  
+  section {
     padding: 60px 0;
-}
-
-.container {
+  }
+  
+  .container {
     width: 80%;
     margin: 0 auto;
     text-align: center;
-}
-
-h2 {
+  }
+  
+  h2 {
     margin-bottom: 30px;
     font-size: 2rem;
-}
-
-.services .service {
+  }
+  
+  .services .service {
     display: inline-block;
     width: 30%;
     margin: 15px;
     text-align: center;
-}
-
-.services .service img {
+  }
+  
+  .services .service img {
     width: 100%;
     border-radius: 8px;
-}
-
-.gallery-images {
+  }
+  
+  .gallery-images {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-}
-
-.gallery-images img {
+  }
+  
+  .gallery-images img {
     width: 300px;
     margin: 10px;
-}
-
-.contact form {
+  }
+  
+  .contact form {
     max-width: 600px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-}
-
-.contact form label {
+  }
+  
+  .contact form label {
     margin-top: 10px;
     font-weight: bold;
-}
-
-.contact form input, .contact form textarea {
+  }
+  
+  .contact form input,
+  .contact form textarea {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-}
-
-.contact form button {
-    background-color: #333;
+  }
+  
+  .contact form button {
+    background-color: goldenrod;
     color: white;
     padding: 10px;
     border: none;
     cursor: pointer;
-}
-
-footer {
-    background-color: #333;
-    color: white;
+  }
+  
+  footer {
+    background-color: goldenrod;
+    color: black;
     text-align: center;
     padding: 15px;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
-
-
-body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: row;
-}
-
-.sidebar {
-    width: 220px;
-    background-color: #222;
-    color: white;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding-top: 80px;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    padding: 15px 20px;
-}
-
-.sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-}
-
-.sidebar ul li a:hover {
-    background-color: #444;
-}
-
-.main-content {
-    margin-left: 220px;
-    width: calc(100% - 220px);
-}
+  }
+  
