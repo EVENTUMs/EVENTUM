@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logística de Salones de Eventos</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,163 +15,243 @@
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 20px 0;
+            padding: 20px;
             text-align: center;
         }
 
-        header h1 {
-            margin: 0;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #34495e;
-            padding: 10px;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
         .container {
+            width: 80%;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        .section {
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        section {
             margin-bottom: 40px;
         }
 
-        h2 {
-            color: #2c3e50;
-        }
-
-        .services-list, .salons-list, .contact-form {
-            display: grid;
-            gap: 20px;
-        }
-
-        .service, .salon, .contact-form input, .contact-form textarea {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            margin: 10px 0;
-        }
-
-        .contact-form button {
+        .section-title {
             background-color: #2980b9;
             color: white;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 8px;
+            padding: 10px;
+            font-size: 24px;
+            border-radius: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ecf0f1;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        li:hover {
+            background-color: #bdc3c7;
+        }
+
+        select, input[type="radio"], input[type="checkbox"], textarea {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
             width: 100%;
         }
 
-        .contact-form button:hover {
-            background-color: #3498db;
+        label {
+            font-size: 18px;
+            margin-right: 10px;
         }
 
         footer {
             background-color: #2c3e50;
             color: white;
-            text-align: center;
             padding: 10px;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
+            text-align: center;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            li {
+                font-size: 16px;
+            }
+
+            select, input[type="radio"], input[type="checkbox"], textarea {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Salones de Eventos - Logística y Servicios</h1>
-        <p>La mejor experiencia para tu evento</p>
-    </header>
 
-    <nav>
-        <a href="#bienvenida">Bienvenida</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#salones">Salones</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
+<header>
+    <h1>Logística de Salones de Eventos</h1>
+</header>
 
-    <div class="container">
-        <section id="bienvenida" class="section">
-            <h2>Bienvenida</h2>
-            <p>En nuestra empresa, nos especializamos en la organización de eventos para todo tipo de celebraciones, desde bodas, cumpleaños, hasta eventos corporativos. Ofrecemos un espacio único, con todos los servicios necesarios para hacer de tu evento algo memorable.</p>
+<div class="container">
+    
+    <form action="planificacion.html" method="get">
+        
+        <section>
+            <div class="section-title">1. Planificación Previa</div>
+            <ul>
+                <li>
+                    <label for="eventoTipo">Selecciona el tipo de evento:</label>
+                    <select id="eventoTipo" name="eventoTipo">
+                        <option value="corporativo">Corporativo</option>
+                        <option value="social">Social</option>
+                        <option value="mixto">Mixto</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="espacio">Selecciona el tipo de espacio:</label>
+                    <select id="espacio" name="espacio">
+                        <option value="salonPrincipal">Salón Principal</option>
+                        <option value="zonaDescanso">Zona de Descanso</option>
+                        <option value="zonaExhibicion">Zona de Exhibición</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="catering">¿Qué tipo de catering se necesita? (Selecciona varias opciones):</label><br>
+                    <input type="checkbox" id="buffet" name="catering" value="buffet">
+                    <label for="buffet">Buffet</label><br>
+                    <input type="checkbox" id="servicioPlato" name="catering" value="servicioPlato">
+                    <label for="servicioPlato">Servicio a la Mesa</label>
+                </li>
+                <li>Confirmación de fechas y horarios</li>
+                
+                <li>
+                    <label for="comentariosPlanificacion">Comentarios adicionales sobre la planificación previa:</label>
+                    <textarea id="comentariosPlanificacion" name="comentariosPlanificacion"></textarea>
+                </li>
+            </ul>
         </section>
 
-        <section id="servicios" class="section">
-            <h2>Servicios</h2>
-            <div class="services-list">
-                <div class="service">
-                    <h3>Decoración Personalizada</h3>
-                    <p>Ofrecemos opciones de decoración a medida para hacer que tu evento sea único y especial.</p>
-                </div>
-                <div class="service">
-                    <h3>Catering</h3>
-                    <p>Contamos con un servicio de catering con menús variados adaptados a todos los gustos y necesidades dietéticas.</p>
-                </div>
-                <div class="service">
-                    <h3>DJ y Música</h3>
-                    <p>Disponemos de un servicio de DJ y equipos de sonido para animar tu evento.</p>
-                </div>
-                <div class="service">
-                    <h3>Coordinación de Eventos</h3>
-                    <p>Nuestros expertos en planificación te ayudarán a coordinar todos los aspectos del evento.</p>
-                </div>
-            </div>
+        
+        <section>
+            <div class="section-title">2. Coordinación de Recursos</div>
+            <ul>
+                <li>
+                    <label for="equiposTecnologia">Selecciona los equipos tecnológicos necesarios:</label><br>
+                    <input type="checkbox" id="audio" name="equiposTecnologia" value="audio">
+                    <label for="audio">Audio</label><br>
+                    <input type="checkbox" id="video" name="equiposTecnologia" value="video">
+                    <label for="video">Video</label><br>
+                    <input type="checkbox" id="wifi" name="equiposTecnologia" value="wifi">
+                    <label for="wifi">Wi-Fi</label>
+                </li>
+                <li>
+                    <label for="personal">Selecciona el personal necesario:</label><br>
+                    <input type="checkbox" id="coordinadores" name="personal" value="coordinadores">
+                    <label for="coordinadores">Coordinadores</label><br>
+                    <input type="checkbox" id="asistentes" name="personal" value="asistentes">
+                    <label for="asistentes">Asistentes</label><br>
+                    <input type="checkbox" id="tecnicos" name="personal" value="tecnicos">
+                    <label for="tecnicos">Técnicos</label>
+                </li>
+              
+                <li>
+                    <label for="comentariosRecursos">Comentarios adicionales sobre recursos:</label>
+                    <textarea id="comentariosRecursos" name="comentariosRecursos"></textarea>
+                </li>
+            </ul>
         </section>
 
-        <section id="salones" class="section">
-            <h2>Salones</h2>
-            <div class="salons-list">
-                <div class="salon">
-                    <h3>Salon A</h3>
-                    <p>Un salón espacioso para eventos grandes. Capacidad de hasta 500 personas.</p>
-                </div>
-                <div class="salon">
-                    <h3>Salon B</h3>
-                    <p>Perfecto para bodas y eventos íntimos. Capacidad de hasta 150 personas.</p>
-                </div>
-                <div class="salon">
-                    <h3>Salon C</h3>
-                    <p>Ideal para reuniones corporativas y seminarios. Capacidad de hasta 100 personas.</p>
-                </div>
-            </div>
+        
+        <section>
+            <div class="section-title">3. Durante el Evento</div>
+            <ul>
+                <li>
+                    <label for="registro">Selecciona el tipo de registro de asistentes:</label>
+                    <select id="registro" name="registro">
+                        <option value="manual">Manual</option>
+                        <option value="electrico">Electrónico</option>
+                    </select>
+                </li>
+                <li>Control de tiempos y actividades</li>
+                <li>Atención al cliente y resolución de imprevistos</li>
+                
+                <li>
+                    <label for="comentariosEjecucion">Comentarios adicionales durante el evento:</label>
+                    <textarea id="comentariosEjecucion" name="comentariosEjecucion"></textarea>
+                </li>
+            </ul>
         </section>
 
-        <section id="contacto" class="section">
-            <h2>Contacto</h2>
-            <p>Si deseas más información o hacer una reserva, por favor completa el siguiente formulario.</p>
-            <form class="contact-form">
-                <input type="text" placeholder="Nombre completo" required>
-                <input type="email" placeholder="Correo electrónico" required>
-                <input type="tel" placeholder="Número de teléfono">
-                <textarea placeholder="Mensaje" rows="5" required></textarea>
-                <button type="submit">Enviar mensaje</button>
-            </form>
+     
+        <section>
+            <div class="section-title">4. Cierre del Evento</div>
+            <ul>
+                <li>
+                    <label for="encuestas">¿Se realizarán encuestas de satisfacción?</label><br>
+                    <input type="radio" id="encuestasSi" name="encuestas" value="si">
+                    <label for="encuestasSi">Sí</label>
+                    <input type="radio" id="encuestasNo" name="encuestas" value="no">
+                    <label for="encuestasNo">No</label>
+                </li>
+                <li>Limpieza final de las instalaciones</li>
+               
+                <li>
+                    <label for="comentariosCierre">Comentarios sobre el cierre del evento:</label>
+                    <textarea id="comentariosCierre" name="comentariosCierre"></textarea>
+                </li>
+            </ul>
         </section>
-    </div>
 
-    <footer>
-        <p>&copy; 2025 Salones de Eventos. Todos los derechos reservados.</p>
-    </footer>
-</body>
-</html>
+        
+        <section>
+            <div class="section-title">5. Post-evento</div>
+            <ul>
+                <li>
+                    <label for="evaluacion">¿Se realizará una evaluación de resultados?</label><br>
+                    <input type="radio" id="evaluacionSi" name="evaluacion" value="si">
+                    <label for="evaluacionSi">Sí</label>
+                    <input type="radio" id="evaluacionNo" name="evaluacion" value="no">
+                    <label for="evaluacionNo">No</label>
+                </li>
+                <li>Revisión de proveedores (calidad de servicios)</li>
+                <li>Relaciones públicas (agradecimientos, contenido en redes sociales)</li>
+                
+                <li>
+                    <label for="comentariosPostEvento">Comentarios post-evento:</label>
+                    <textarea id="comentariosPostEvento" name="comentariosPostEvento"></textarea>
+                </li>
+            </ul>
+        </section>
+
+        
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2025 Logística de Salones de Eventos. Todos los derechos reservados.</p>
+</footer>
 
 </body>
 </html>
