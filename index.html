@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Organización de eventos profesionales.">
-    <title>Organización de Eventos</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Organización de eventos profesionales." />
+  <title>Organización de Eventos</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <!-- Botón para abrir menú -->
+  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+  <!-- Barra lateral -->
+  <div class="sidebar" id="sidebar">
+    <h2>Eventum</h2>
+    <ul>
+      <li><a href="inicio.html" onclick="toggleSidebar()">Inicio</a></li>
+      <li><a href="nosotros.html" onclick="toggleSidebar()">Nosotros</a></li>
+      <li><a href="servicios.html" onclick="toggleSidebar()">Servicios</a></li>
+      <li><a href="galeria.html" onclick="toggleSidebar()">Galería</a></li>
+      <li><a href="contacto.html" onclick="toggleSidebar()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
     <header>
-        <div class="logo">
-            <h1>Eventum</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#about">Nosotros</a></li>
-                <li><a href="#services">Servicios</a></li>
-                <li><a href="#gallery">Galería</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
-        </nav>
+      <div class="logo">
+        <h1>Eventum</h1>
+      </div>
     </header>
 
-    <div class="sidebar">
-        <ul>
-            <li><a href="#home">Inicio</a></li>
-            <li><a href="#about">Nosotros</a></li>
-            <li><a href="#services">Servicios</a></li>
-            <li><a href="#gallery">Galería</a></li>
-            <li><a href="#contact">Contacto</a></li>
-        </ul>
-    </div>
-    
-    <div class="main-content">
-        <!-- Todo el contenido existente desde <section id="home"> hasta </footer> lo mueves aquí -->
-    </div>
-    
-
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Transformamos tu evento en una experiencia única</h2>
-            <p>Nos encargamos de cada detalle para que tu evento sea todo un éxito.</p>
-        </div>
+      <div class="hero-content">
+        <h2>Transformamos tu evento en una experiencia única</h2>
+        <p>Nos encargamos de cada detalle para que tu evento sea todo un éxito.</p>
+      </div>
     </section>
 
     <section id="about" class="about">
-        <div class="container">
-            <h2>¿Quiénes somos?</h2>
-            <p>Somos una empresa con más de 10 años de experiencia en la organización de eventos. Nos especializamos en bodas, corporativos, conferencias, conciertos y más.</p>
-        </div>
+      <div class="container">
+        <h2>¿Quiénes somos?</h2>
+        <p>Somos una empresa con más de 10 años de experiencia en la organización de eventos.</p>
+      </div>
     </section>
 
     <section id="services" class="services">
@@ -72,42 +65,59 @@
                 <p>Gestionamos la logística del evento para que todo salga según lo planeado.</p>
             </div>
         </div>
+        <div class="service">
+          <img src="img/ambientacion.jpg" alt="Servicio 2" />
+          <h3>Decoración y Ambientación</h3>
+          <p>Diseñamos ambientes únicos.</p>
+        </div>
+        <div class="service">
+          <img src="img/logistica.jpg" alt="Servicio 3" />
+          <h3>Logística</h3>
+          <p>Gestionamos la logística del evento.</p>
+        </div>
+      </div>
     </section>
 
     <section id="gallery" class="gallery">
-        <div class="container">
-            <h2>Galería de Eventos</h2>
-            <div class="gallery-images">
-                <img src="img/evento1.jpg" alt="Evento 1">
-                <img src="img/evento2.jpg" alt="Evento 2">
-                <img src="img/evento4.jpg" alt="Evento 3">
-                <img src="img/evento5.jpg" alt="Evento 4">
-            </div>
+      <div class="container">
+        <h2>Galería de Eventos</h2>
+        <div class="gallery-images">
+          <img src="img/evento1.jpg" alt="Evento 1" />
+          <img src="img/evento2.jpg" alt="Evento 2" />
+          <img src="img/evento4.jpg" alt="Evento 3" />
+          <img src="img/evento5.jpg" alt="Evento 4" />
         </div>
+      </div>
     </section>
 
     <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contacto</h2>
-            <form>
-                <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+      <div class="container">
+        <h2>Contacto</h2>
+        <form>
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" required />
 
-                <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="email" placeholder="Tu correo" required>
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required />
 
-                <label for="message">Informanos sobre las cosas mas relevantes</label>
-                <textarea id="message" name="message" placeholder="Tu mensaje..." required></textarea>
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" required></textarea>
 
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Eventum. Todos los derechos reservados.</p>
+      <p>&copy; 2025 Eventum. Todos los derechos reservados.</p>
     </footer>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+  </script>
+
 </body>
 </html>
