@@ -10,25 +10,35 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
 
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #000000;
+            color: #FFD700;
             padding: 20px;
             text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #FFD700;
+            margin-bottom: 20px;
+            transition: text-decoration 0.3s ease;
+        }
+
+        /* Subrayado del título cuando se pase el cursor */
+        h1:hover {
+            text-decoration: underline;
+            text-decoration-color: white;
         }
 
         .container {
             width: 80%;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
         }
 
         section {
@@ -36,8 +46,8 @@
         }
 
         .section-title {
-            background-color: #2980b9;
-            color: white;
+            background-color: #FFD700;
+            color: #000000;
             padding: 10px;
             font-size: 24px;
             border-radius: 5px;
@@ -54,6 +64,7 @@
             padding: 10px;
             border-radius: 5px;
             font-size: 18px;
+            color: #333;
         }
 
         li:hover {
@@ -65,16 +76,26 @@
             font-size: 16px;
             margin-top: 10px;
             width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Estilo para hover sobre los campos (checkboxes, radios, selects, etc.) */
+        select:hover, input[type="radio"]:hover, input[type="checkbox"]:hover, textarea:hover {
+            background-color: #000000;
+            color: #ffffff;
         }
 
         label {
             font-size: 18px;
             margin-right: 10px;
+            color: #333;
         }
 
         footer {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #000000;
+            color: #FFD700;
             padding: 10px;
             text-align: center;
         }
@@ -84,6 +105,26 @@
             resize: vertical;
         }
 
+        button {
+            background-color: #FFD700;
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        /* Subrayado del botón cuando se pase el cursor */
+        button:hover {
+            background-color: #e1b700;
+            text-decoration: underline;
+            text-decoration-color: white;
+        }
+
+        /* Media Query */
         @media screen and (max-width: 768px) {
             .container {
                 width: 95%;
@@ -209,9 +250,9 @@
             <ul>
                 <li>
                     <label for="encuestas">¿Se realizarán encuestas de satisfacción?</label><br>
-                    <input type="radio" id="encuestasSi" name="encuestas" value="si">
-                    <label for="encuestasSi">Sí</label>
-                    <input type="radio" id="encuestasNo" name="encuestas" value="no">
+                    <input type="checkbox" id="encuestasSi" name="encuestas" value="si">
+                    <label for="encuestasSi">Sí</label><br>
+                    <input type="checkbox" id="encuestasNo" name="encuestas" value="no">
                     <label for="encuestasNo">No</label>
                 </li>
                 <li>Limpieza final de las instalaciones</li>
@@ -229,9 +270,9 @@
             <ul>
                 <li>
                     <label for="evaluacion">¿Se realizará una evaluación de resultados?</label><br>
-                    <input type="radio" id="evaluacionSi" name="evaluacion" value="si">
-                    <label for="evaluacionSi">Sí</label>
-                    <input type="radio" id="evaluacionNo" name="evaluacion" value="no">
+                    <input type="checkbox" id="evaluacionSi" name="evaluacion" value="si">
+                    <label for="evaluacionSi">Sí</label><br>
+                    <input type="checkbox" id="evaluacionNo" name="evaluacion" value="no">
                     <label for="evaluacionNo">No</label>
                 </li>
                 <li>Revisión de proveedores (calidad de servicios)</li>
@@ -248,5 +289,6 @@
         <button type="submit">Enviar</button>
     </form>
 </div>
+
 </body>
 </html>
