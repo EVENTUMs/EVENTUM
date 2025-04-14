@@ -1,121 +1,134 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Organización de eventos profesionales." />
-  <title>Organización de Eventos</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVENTUM</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f1c13c, #daac16);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 5rem;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      animation: fadeIn 2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Barra lateral */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px; /* Inicialmente oculta */
+      width: 250px;
+      height: 100%;
+      background-color:  #f1c13c;
+      color: white;
+      padding: 20px;
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+    }
+
+    .sidebar h2 {
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.3rem;
+      transition: color 0.3s;
+    }
+
+    .sidebar ul li a:hover {
+      color: #2115c7;
+    }
+
+    /* Botón para abrir la barra lateral */
+    .open-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #f9a825;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1100;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    .open-btn:hover {
+      background-color: #d41407;
+    }
+
+  </style>
 </head>
 <body>
 
-  <!-- Botón para abrir menú -->
-  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+  <!-- Botón para abrir la barra lateral -->
+  <button class="open-btn" onclick="toggleSidebar()">☰ Menú</button>
 
   <!-- Barra lateral -->
   <div class="sidebar" id="sidebar">
-    <h2>Eventum</h2>
+    <h2>Menú Lateral</h2>
     <ul>
-      <li><a href="inicio.html" onclick="toggleSidebar()">Inicio</a></li>
-      <li><a href="nosotros.html" onclick="toggleSidebar()">Nosotros</a></li>
-      <li><a href="servicios.html" onclick="toggleSidebar()">Servicios</a></li>
-      <li><a href="galeria.html" onclick="toggleSidebar()">Galería</a></li>
-      <li><a href="contacto.html" onclick="toggleSidebar()">Contacto</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
     </ul>
   </div>
 
-  <!-- Contenido principal -->
-  <div class="main-content">
-    <header>
-      <div class="logo">
-        <h1>Eventum</h1>
-      </div>
-    </header>
-
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <h2>Transformamos tu evento en una experiencia única</h2>
-        <p>Nos encargamos de cada detalle para que tu evento sea todo un éxito.</p>
-      </div>
-    </section>
-
-    <section id="about" class="about">
-      <div class="container">
-        <h2>¿Quiénes somos?</h2>
-        <p>Somos una empresa con más de 10 años de experiencia en la organización de eventos.</p>
-      </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Servicios</h2>
-            <div class="service">
-                <img src="img/Planificación-de-eventos.jpg" alt="Servicio 1">
-                <h3><a href="planificacion.html">Planificación de Eventos</a></h3>
-                <p>Nos encargamos de todo el proceso, solo selecciona a gusto.</p>
-            </div>
-            <div class="service">
-                <img src="img/ambientacion.jpg" alt="Servicio 2">
-                <h3><a href="decoracion.html">Decoración y Ambientación</a></h3>
-                <p>Diseñamos ambientes únicos y personalizados para cada tipo de evento.</p>
-            </div>
-            <div class="service">
-                <img src="img/logistica.jpg" alt="Servicio 3">
-                <h3><a href="logistica.html">Logística</a></h3>
-                <p>Gestionamos la logística del evento para que todo salga según lo planeado.</p>
-            </div>
-        </div>
-        <div class="service">
-          <img src="img/ambientacion.jpg" alt="Servicio 2" />
-          <h3>Decoración y Ambientación</h3>
-          <p>Diseñamos ambientes únicos.</p>
-        </div>
-        <div class="service">
-          <img src="img/logistica.jpg" alt="Servicio 3" />
-          <h3>Logística</h3>
-          <p>Gestionamos la logística del evento.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="gallery">
-      <div class="container">
-        <h2>Galería de Eventos</h2>
-        <div class="gallery-images">
-          <img src="img/evento1.jpg" alt="Evento 1" />
-          <img src="img/evento2.jpg" alt="Evento 2" />
-          <img src="img/evento4.jpg" alt="Evento 3" />
-          <img src="img/evento5.jpg" alt="Evento 4" />
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="contact">
-      <div class="container">
-        <h2>Contacto</h2>
-        <form>
-          <label for="name">Nombre</label>
-          <input type="text" id="name" name="name" required />
-
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" name="email" required />
-
-          <label for="message">Mensaje</label>
-          <textarea id="message" name="message" required></textarea>
-
-          <button type="submit">Enviar</button>
-        </form>
-      </div>
-    </section>
-
-    <footer>
-      <p>&copy; 2025 Eventum. Todos los derechos reservados.</p>
-    </footer>
+  <div class="container">
+    <h1>EVENTUM</h1>
   </div>
 
   <script>
+    // Función para abrir y cerrar la barra lateral
     function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("active");
+      var sidebar = document.getElementById('sidebar');
+
+      if (sidebar.style.left === '-250px') {
+        sidebar.style.left = '0';
+      } else {
+        sidebar.style.left = '-250px';
+      }
     }
   </script>
 
