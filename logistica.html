@@ -27,11 +27,11 @@
             transition: text-decoration 0.3s ease, color 0.3s ease;
         }
 
-        /* Subrayado del título cuando se pase el cursor */
+     
         h1:hover {
             text-decoration: underline;
             text-decoration-color: white;
-            color: red; /* Título cambia a rojo cuando se pasa el cursor */
+            color: red; 
         }
 
         .container {
@@ -55,9 +55,9 @@
             border-radius: 5px;
         }
 
-        /* Efecto hover en el título de la sección */
+        
         .section-title:hover {
-            background-color: #e67e22; /* Naranja más suave al hacer hover */
+            background-color: #e67e22; 
         }
 
         ul {
@@ -76,9 +76,9 @@
         }
 
         li:hover {
-            background-color: #e67e22; /* Naranja en hover */
-            transform: scale(1.02); /* Efecto de ampliación al pasar el cursor */
-            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4); /* Sombra suave naranja */
+            background-color: #e67e22; 
+            transform: scale(1.02); 
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4); 
         }
 
         select, input[type="radio"], input[type="checkbox"], textarea {
@@ -91,11 +91,11 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Detalles en los campos de formulario */
+       
         select:hover, input[type="radio"]:hover, input[type="checkbox"]:hover, textarea:hover {
             background-color: #000000;
             color: #ffffff;
-            border-color: #e74c3c; /* Borde rojo sutil al hacer hover */
+            border-color: #e74c3c; 
         }
 
         label {
@@ -128,51 +128,49 @@
             position: relative;
         }
 
-        /* Efecto hover en el botón */
+    
         button:hover {
-            background-color: #e74c3c; /* Rojo al pasar el cursor */
+            background-color: #e74c3c; 
             text-decoration: underline;
             text-decoration-color: white;
-            transform: scale(1.05); /* Ampliación suave al pasar el cursor */
+            transform: scale(1.05); 
         }
 
-        /* Frase "robot led" colocada cerca del botón, con colores blanco y negro */
         .robot-led {
             position: absolute;
-            font-size: 14px; /* Tamaño pequeño pero legible */
-            color: #000000; /* Negro */
+            font-size: 14px; 
+            color: #000000; 
             right: 10px;
-            bottom: -25px; /* Colocado debajo del botón */
-            opacity: 0.1; /* Menos visible */
-            pointer-events: none; /* No se puede seleccionar */
+            bottom: -25px; 
+            opacity: 0.1; 
+            pointer-events: none; 
             transition: opacity 0.3s ease, font-size 0.3s ease;
         }
 
-        /* Se hace más visible cuando el cursor pasa por encima del botón */
+        
         button:hover + .robot-led {
-            opacity: 0.3; /* Aumenta la opacidad un poco */
-            font-size: 16px; /* Aumenta el tamaño de la fuente */
+            opacity: 0.3; 
+            font-size: 16px; 
         }
 
-        /* Nueva frase "robot led" añadida */
         .robot-led-second {
             position: absolute;
-            font-size: 14px; /* Tamaño pequeño pero legible */
-            color: #FFFFFF; /* Blanco */
+            font-size: 14px; 
+            color: #FFFFFF; 
             left: 20px;
-            top: -25px; /* Colocado en la parte superior */
-            opacity: 0.1; /* Menos visible */
-            pointer-events: none; /* No se puede seleccionar */
+            top: -25px; 
+            opacity: 0.1; 
+            pointer-events: none; 
             transition: opacity 0.3s ease, font-size 0.3s ease;
         }
 
-        /* Se hace más visible cuando el cursor pasa por encima del contenedor */
+      
         .container:hover .robot-led-second {
-            opacity: 0.3; /* Aumenta la opacidad un poco */
-            font-size: 16px; /* Aumenta el tamaño de la fuente */
+            opacity: 0.3; 
+            font-size: 16px; 
         }
 
-        /* Media Query */
+       
         @media screen and (max-width: 768px) {
             .container {
                 width: 95%;
@@ -204,7 +202,7 @@
 
 <div class="container">
     
-    <form action="planificacion.html" method="get">
+    <form action="planificacion.php" method="get">
         
         <section>
             <div class="section-title">1. Planificación Previa</div>
@@ -329,9 +327,8 @@
 
         
         <button type="submit">Enviar</button>
-        <span class="robot-led">robot led</span> <!-- Frase discreta -->
-        <span class="robot-led-second">robot led</span> <!-- Segunda frase discreta -->
-
+        <span class="robot-led">robot led</span>
+        <span class="robot-led-second">robot led</span> 
     </form>
 </div>
 
