@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros - EVENTUM</title>
+  <style>
+    /* Fondo animado con burbujas suaves */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Menú de navegación fijo */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 20px;
+      color: white;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav ul li {
+      margin: 0 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #00c9a7;
+    }
+
+    /* Fondo animado */
+    .fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, #1e3c72, #2a5298);
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .burbuja {
+      position: absolute;
+      bottom: -150px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: subir 20s infinite ease-in;
+    }
+
+    .burbuja:nth-child(2) { left: 20%; animation-duration: 18s; width: 60px; height: 60px; }
+    .burbuja:nth-child(3) { left: 40%; animation-duration: 22s; width: 30px; height: 30px; }
+    .burbuja:nth-child(4) { left: 60%; animation-duration: 25s; width: 50px; height: 50px; }
+    .burbuja:nth-child(5) { left: 80%; animation-duration: 19s; width: 35px; height: 35px; }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 60px 20px;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .equipo {
+      margin-top: 50px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    .equipo h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menú de navegación fijo -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Fondo animado -->
+  <div class="fondo">
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+    <div class="burbuja"></div>
+  </div>
+
+  <div class="container">
+    <h1>¿Quiénes somos?</h1>
+    <p>En <strong>EVENTUM</strong> somos más que organizadores de eventos: somos creadores de experiencias. Nuestro objetivo es hacer que cada celebración sea especial, única e inolvidable.</p>
+
+    <p>Desde nuestros inicios, trabajamos con pasión, creatividad y compromiso, transformando ideas en realidades memorables. Nos encargamos de cada detalle para que vos solo te dediques a disfrutar.</p>
+
+    <div class="equipo">
+      <h2>Conocé a nuestro equipo</h2>
+      <p>Un grupo multidisciplinario de especialistas en eventos, decoración, logística y coordinación. Juntos, hacemos magia en cada celebración ✨</p>
+    </div>
+  </div>
+
+</body>
+</html>
