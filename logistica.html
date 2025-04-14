@@ -24,13 +24,14 @@
             font-size: 36px;
             color: #FFD700;
             margin-bottom: 20px;
-            transition: text-decoration 0.3s ease;
+            transition: text-decoration 0.3s ease, color 0.3s ease;
         }
 
         /* Subrayado del título cuando se pase el cursor */
         h1:hover {
             text-decoration: underline;
             text-decoration-color: white;
+            color: red; /* Título cambia a rojo cuando se pasa el cursor */
         }
 
         .container {
@@ -39,6 +40,7 @@
             padding: 20px;
             background-color: #ffffff;
             border-radius: 10px;
+            position: relative;
         }
 
         section {
@@ -53,6 +55,11 @@
             border-radius: 5px;
         }
 
+        /* Efecto hover en el título de la sección */
+        .section-title:hover {
+            background-color: #e67e22; /* Naranja más suave al hacer hover */
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
@@ -65,10 +72,13 @@
             border-radius: 5px;
             font-size: 18px;
             color: #333;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         li:hover {
-            background-color: #bdc3c7;
+            background-color: #e67e22; /* Naranja en hover */
+            transform: scale(1.02); /* Efecto de ampliación al pasar el cursor */
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4); /* Sombra suave naranja */
         }
 
         select, input[type="radio"], input[type="checkbox"], textarea {
@@ -78,13 +88,14 @@
             width: 100%;
             border: 1px solid #ddd;
             border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Estilo para hover sobre los campos (checkboxes, radios, selects, etc.) */
+        /* Detalles en los campos de formulario */
         select:hover, input[type="radio"]:hover, input[type="checkbox"]:hover, textarea:hover {
             background-color: #000000;
             color: #ffffff;
+            border-color: #e74c3c; /* Borde rojo sutil al hacer hover */
         }
 
         label {
@@ -113,15 +124,52 @@
             font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            position: relative;
         }
 
-        /* Subrayado del botón cuando se pase el cursor */
+        /* Efecto hover en el botón */
         button:hover {
-            background-color: #e1b700;
+            background-color: #e74c3c; /* Rojo al pasar el cursor */
             text-decoration: underline;
             text-decoration-color: white;
+            transform: scale(1.05); /* Ampliación suave al pasar el cursor */
+        }
+
+        /* Frase "robot led" colocada cerca del botón, con colores blanco y negro */
+        .robot-led {
+            position: absolute;
+            font-size: 14px; /* Tamaño pequeño pero legible */
+            color: #000000; /* Negro */
+            right: 10px;
+            bottom: -25px; /* Colocado debajo del botón */
+            opacity: 0.1; /* Menos visible */
+            pointer-events: none; /* No se puede seleccionar */
+            transition: opacity 0.3s ease, font-size 0.3s ease;
+        }
+
+        /* Se hace más visible cuando el cursor pasa por encima del botón */
+        button:hover + .robot-led {
+            opacity: 0.3; /* Aumenta la opacidad un poco */
+            font-size: 16px; /* Aumenta el tamaño de la fuente */
+        }
+
+        /* Nueva frase "robot led" añadida */
+        .robot-led-second {
+            position: absolute;
+            font-size: 14px; /* Tamaño pequeño pero legible */
+            color: #FFFFFF; /* Blanco */
+            left: 20px;
+            top: -25px; /* Colocado en la parte superior */
+            opacity: 0.1; /* Menos visible */
+            pointer-events: none; /* No se puede seleccionar */
+            transition: opacity 0.3s ease, font-size 0.3s ease;
+        }
+
+        /* Se hace más visible cuando el cursor pasa por encima del contenedor */
+        .container:hover .robot-led-second {
+            opacity: 0.3; /* Aumenta la opacidad un poco */
+            font-size: 16px; /* Aumenta el tamaño de la fuente */
         }
 
         /* Media Query */
@@ -276,17 +324,14 @@
                     <label for="evaluacionNo">No</label>
                 </li>
                 <li>Revisión de proveedores (calidad de servicios)</li>
-                <li>Relaciones públicas (agradecimientos, contenido en redes sociales)</li>
-                
-                <li>
-                    <label for="comentariosPostEvento">Comentarios post-evento:</label>
-                    <textarea id="comentariosPostEvento" name="comentariosPostEvento"></textarea>
-                </li>
             </ul>
         </section>
 
         
         <button type="submit">Enviar</button>
+        <span class="robot-led">robot led</span> <!-- Frase discreta -->
+        <span class="robot-led-second">robot led</span> <!-- Segunda frase discreta -->
+
     </form>
 </div>
 
