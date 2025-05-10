@@ -10,25 +10,37 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
 
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #000000;
+            color: #FFD700;
             padding: 20px;
             text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #FFD700;
+            margin-bottom: 20px;
+            transition: text-decoration 0.3s ease, color 0.3s ease;
+        }
+
+     
+        h1:hover {
+            text-decoration: underline;
+            text-decoration-color: white;
+            color: red; 
         }
 
         .container {
             width: 80%;
             margin: 0 auto;
             padding: 20px;
-        }
-
-        h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            position: relative;
         }
 
         section {
@@ -36,11 +48,16 @@
         }
 
         .section-title {
-            background-color: #2980b9;
-            color: white;
+            background-color: #FFD700;
+            color: #000000;
             padding: 10px;
             font-size: 24px;
             border-radius: 5px;
+        }
+
+        
+        .section-title:hover {
+            background-color: #e67e22; 
         }
 
         ul {
@@ -54,10 +71,14 @@
             padding: 10px;
             border-radius: 5px;
             font-size: 18px;
+            color: #333;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         li:hover {
-            background-color: #bdc3c7;
+            background-color: #e67e22; 
+            transform: scale(1.02); 
+            box-shadow: 0 4px 8px rgba(230, 126, 34, 0.4); 
         }
 
         select, input[type="radio"], input[type="checkbox"], textarea {
@@ -65,16 +86,27 @@
             font-size: 16px;
             margin-top: 10px;
             width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+       
+        select:hover, input[type="radio"]:hover, input[type="checkbox"]:hover, textarea:hover {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #e74c3c; 
         }
 
         label {
             font-size: 18px;
             margin-right: 10px;
+            color: #333;
         }
 
         footer {
-            background-color: #2c3e50;
-            color: white;
+            background-color: #000000;
+            color: #FFD700;
             padding: 10px;
             text-align: center;
         }
@@ -84,6 +116,61 @@
             resize: vertical;
         }
 
+        button {
+            background-color: #FFD700;
+            color: #000000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+    
+        button:hover {
+            background-color: #e74c3c; 
+            text-decoration: underline;
+            text-decoration-color: white;
+            transform: scale(1.05); 
+        }
+
+        .robot-led {
+            position: absolute;
+            font-size: 14px; 
+            color: #000000; 
+            right: 10px;
+            bottom: -25px; 
+            opacity: 0.1; 
+            pointer-events: none; 
+            transition: opacity 0.3s ease, font-size 0.3s ease;
+        }
+
+        
+        button:hover + .robot-led {
+            opacity: 0.3; 
+            font-size: 16px; 
+        }
+
+        .robot-led-second {
+            position: absolute;
+            font-size: 14px; 
+            color: #FFFFFF; 
+            left: 20px;
+            top: -25px; 
+            opacity: 0.1; 
+            pointer-events: none; 
+            transition: opacity 0.3s ease, font-size 0.3s ease;
+        }
+
+      
+        .container:hover .robot-led-second {
+            opacity: 0.3; 
+            font-size: 16px; 
+        }
+
+       
         @media screen and (max-width: 768px) {
             .container {
                 width: 95%;
@@ -209,9 +296,9 @@
             <ul>
                 <li>
                     <label for="encuestas">¿Se realizarán encuestas de satisfacción?</label><br>
-                    <input type="radio" id="encuestasSi" name="encuestas" value="si">
-                    <label for="encuestasSi">Sí</label>
-                    <input type="radio" id="encuestasNo" name="encuestas" value="no">
+                    <input type="checkbox" id="encuestasSi" name="encuestas" value="si">
+                    <label for="encuestasSi">Sí</label><br>
+                    <input type="checkbox" id="encuestasNo" name="encuestas" value="no">
                     <label for="encuestasNo">No</label>
                 </li>
                 <li>Limpieza final de las instalaciones</li>
@@ -229,24 +316,21 @@
             <ul>
                 <li>
                     <label for="evaluacion">¿Se realizará una evaluación de resultados?</label><br>
-                    <input type="radio" id="evaluacionSi" name="evaluacion" value="si">
-                    <label for="evaluacionSi">Sí</label>
-                    <input type="radio" id="evaluacionNo" name="evaluacion" value="no">
+                    <input type="checkbox" id="evaluacionSi" name="evaluacion" value="si">
+                    <label for="evaluacionSi">Sí</label><br>
+                    <input type="checkbox" id="evaluacionNo" name="evaluacion" value="no">
                     <label for="evaluacionNo">No</label>
                 </li>
                 <li>Revisión de proveedores (calidad de servicios)</li>
-                <li>Relaciones públicas (agradecimientos, contenido en redes sociales)</li>
-                
-                <li>
-                    <label for="comentariosPostEvento">Comentarios post-evento:</label>
-                    <textarea id="comentariosPostEvento" name="comentariosPostEvento"></textarea>
-                </li>
             </ul>
         </section>
 
         
         <button type="submit">Enviar</button>
+        <span class="robot-led">robot led</span>
+        <span class="robot-led-second">robot led</span> 
     </form>
 </div>
+
 </body>
 </html>
