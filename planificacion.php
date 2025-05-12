@@ -21,6 +21,23 @@ $asistencia = $_POST['asistencia'] ?? 'electrónico';
     .section { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 0 10px #ccc; }
     img { max-width: 100%; border-radius: 10px; margin-top: 10px; }
     h2 { color: #333; }
+     /* Estilo para WebKit (Chrome, Safari, Edge) */
+     ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #e3f2fd; /* azul muy claro */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #90caf9; /* celeste claro */
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64b5f6;
+    }
   </style>
 </head>
 <body>
