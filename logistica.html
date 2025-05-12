@@ -1,252 +1,955 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logística de Salones de Eventos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logística - EVENTUM</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+        .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--text-light);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+    .menu-toggle:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
 
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(24, 40, 72, 0.95);
+      color: var(--text-light);
+      padding-top: 70px;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1000;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
 
-        h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 20px;
-        }
+    .sidebar.active {
+      left: 0;
+    }
 
-        section {
-            margin-bottom: 40px;
-        }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      letter-spacing: 3px;
+    }
 
-        .section-title {
-            background-color: #2980b9;
-            color: white;
-            padding: 10px;
-            font-size: 24px;
-            border-radius: 5px;
-        }
+    .sidebar ul {
+      list-style: none;
+      padding: 0 20px;
+    }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    .sidebar ul li {
+      margin: 10px 0;
+    }
 
-        li {
-            background-color: #ecf0f1;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 18px;
-        }
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
 
-        li:hover {
-            background-color: #bdc3c7;
-        }
+    .sidebar ul li a:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding-left: 30px;
+    }
 
-        select, input[type="radio"], input[type="checkbox"], textarea {
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-            width: 100%;
-        }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
 
-        label {
-            font-size: 18px;
-            margin-right: 10px;
-        }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
-
-        @media screen and (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-
-            h1 {
-                font-size: 28px;
-            }
-
-            .section-title {
-                font-size: 20px;
-            }
-
-            li {
-                font-size: 16px;
-            }
-
-            select, input[type="radio"], input[type="checkbox"], textarea {
-                width: 100%;
-            }
-        }
-    </style>
+    .logistics-hero {
+      height: 50vh;
+      background-image: url('/api/placeholder/1920/1080');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logistics-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .logistics-hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      max-width: 800px;
+    }
+    
+    .logistics-hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .logistics-hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    
+    .logistics-form {
+      background: white;
+      padding: 50px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin: -80px auto 80px;
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(241, 193, 60, 0.3);
+      outline: none;
+    }
+    
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -15px;
+    }
+    
+    .form-col {
+      flex: 1;
+      padding: 0 15px;
+      min-width: 250px;
+    }
+    
+    .form-submit {
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .form-submit .btn-primary {
+      padding: 12px 40px;
+      font-size: 1.1rem;
+    }
+    
+    .logistics-steps {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+    }
+    
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 50px;
+    }
+    
+    .step {
+      flex-basis: calc(25% - 30px);
+      min-width: 250px;
+      margin-bottom: 30px;
+      text-align: center;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--primary-color);
+      color: var(--text-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0 auto 20px;
+    }
+    
+    .step h3 {
+      margin-bottom: 15px;
+      color: var(--text-dark);
+    }
+    
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50px;
+      right: -15px;
+      width: 30px;
+      height: 2px;
+      background: var(--primary-color);
+      display: none;
+    }
+    
+    @media (min-width: 992px) {
+      .step:not(:last-child)::after {
+        display: block;
+      }
+    }
+    
+    .faq-section {
+      padding: 80px 0;
+    }
+    
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .faq-item {
+      margin-bottom: 20px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .faq-question {
+      background: white;
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-question:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+    }
+    
+    .faq-answer p {
+      padding: 20px 0;
+    }
+    
+    .faq-item.active .faq-question {
+      background-color: var(--primary-color);
+    }
+    
+    .faq-item.active .faq-question::after {
+      content: '-';
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+    
+    #camposAdicionales {
+      margin-top: 20px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .campo-adicional {
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--text-dark);
+    }
+    
+    .section-title p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: #666;
+    }
+    
+    /* Nuevos estilos para la versión mejorada */
+    .logistics-stages {
+      margin-bottom: 40px;
+    }
+    
+    .stage-title {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding: 15px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    
+    .checkbox-item {
+      margin-right: 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .checkbox-item input {
+      margin-right: 8px;
+    }
+    
+    .radio-group {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    
+    .radio-item {
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .radio-item input {
+      margin-right: 8px;
+    }
+    
+    .progress-container {
+      position: sticky;
+      top: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      z-index: 10;
+    }
+    
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    
+    .progress-step::before {
+      content: '';
+      height: 4px;
+      width: 100%;
+      background: #ddd;
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      z-index: -1;
+    }
+    
+    .progress-step:last-child::before {
+      display: none;
+    }
+    
+    .progress-step-number {
+      width: 30px;
+      height: 30px;
+      background: #ddd;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 5px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .progress-step.active .progress-step-number {
+      background: var(--primary-color);
+    }
+    
+    .progress-step-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
+  <button class="menu-toggle" id="menuToggle">☰</button>
 
-<header>
-    <h1>Logística de Salones de Eventos</h1>
-</header>
+  <div class="sidebar" id="sidebar">
+    <h2>EVENTUM</h2>
+    <ul>
+      <li><a href="nosotros.html">Inicio</a></li>
+      
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="galeria.html">Galería</a></li>
 
-<div class="container">
-    
-    <form action="planificacion.html" method="get">
+      
+      <li><a href="logistica.html">Logística</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div class="logo">
+        <h1>EVENTUM</h1>
+      </div>
+    </header>
+
+    <div class="logistics-hero">
+      <div class="logistics-hero-content">
+        <h1>Logística para tu Evento</h1>
+        <p>Te ayudamos a planificar todos los aspectos técnicos y logísticos para que tu evento sea perfecto de principio a fin</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="progress-container">
+        <h3>Proceso de Planificación</h3>
+        <div class="progress-steps">
+          <div class="progress-step active">
+            <div class="progress-step-number">1</div>
+            <div class="progress-step-text">Planificación</div>
+          </div>
+          <div class="progress-step">
+            <div class="progress-step-number">2</div>
+            <div class="progress-step-text">Coordinación</div>
+          </div>
+          <div class="progress-step">
+            <div class="progress-step-number">3</div>
+            <div class="progress-step-text">Ejecución</div>
+          </div>
+          <div class="progress-step">
+            <div class="progress-step-number">4</div>
+            <div class="progress-step-text">Cierre</div>
+          </div>
+          <div class="progress-step">
+            <div class="progress-step-number">5</div>
+            <div class="progress-step-text">Post-evento</div>
+          </div>
+        </div>
+      </div>
+      
+      <form class="logistics-form" action="decoracion.html" method="get">
+        <h2>Planificación de Logística Completa</h2>
+        <p>Completa el siguiente formulario con los detalles para una organización integral de tu evento.</p>
         
-        <section>
-            <div class="section-title">1. Planificación Previa</div>
-            <ul>
-                <li>
-                    <label for="eventoTipo">Selecciona el tipo de evento:</label>
-                    <select id="eventoTipo" name="eventoTipo">
-                        <option value="corporativo">Corporativo</option>
-                        <option value="social">Social</option>
-                        <option value="mixto">Mixto</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="espacio">Selecciona el tipo de espacio:</label>
-                    <select id="espacio" name="espacio">
-                        <option value="salonPrincipal">Salón Principal</option>
-                        <option value="zonaDescanso">Zona de Descanso</option>
-                        <option value="zonaExhibicion">Zona de Exhibición</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="catering">¿Qué tipo de catering se necesita? (Selecciona varias opciones):</label><br>
-                    <input type="checkbox" id="buffet" name="catering" value="buffet">
-                    <label for="buffet">Buffet</label><br>
-                    <input type="checkbox" id="servicioPlato" name="catering" value="servicioPlato">
-                    <label for="servicioPlato">Servicio a la Mesa</label>
-                </li>
-                <li>Confirmación de fechas y horarios</li>
-                
-                <li>
-                    <label for="comentariosPlanificacion">Comentarios adicionales sobre la planificación previa:</label>
-                    <textarea id="comentariosPlanificacion" name="comentariosPlanificacion"></textarea>
-                </li>
-            </ul>
-        </section>
-
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+          </div>
+        </div>
         
-        <section>
-            <div class="section-title">2. Coordinación de Recursos</div>
-            <ul>
-                <li>
-                    <label for="equiposTecnologia">Selecciona los equipos tecnológicos necesarios:</label><br>
-                    <input type="checkbox" id="audio" name="equiposTecnologia" value="audio">
-                    <label for="audio">Audio</label><br>
-                    <input type="checkbox" id="video" name="equiposTecnologia" value="video">
-                    <label for="video">Video</label><br>
-                    <input type="checkbox" id="wifi" name="equiposTecnologia" value="wifi">
-                    <label for="wifi">Wi-Fi</label>
-                </li>
-                <li>
-                    <label for="personal">Selecciona el personal necesario:</label><br>
-                    <input type="checkbox" id="coordinadores" name="personal" value="coordinadores">
-                    <label for="coordinadores">Coordinadores</label><br>
-                    <input type="checkbox" id="asistentes" name="personal" value="asistentes">
-                    <label for="asistentes">Asistentes</label><br>
-                    <input type="checkbox" id="tecnicos" name="personal" value="tecnicos">
-                    <label for="tecnicos">Técnicos</label>
-                </li>
-              
-                <li>
-                    <label for="comentariosRecursos">Comentarios adicionales sobre recursos:</label>
-                    <textarea id="comentariosRecursos" name="comentariosRecursos"></textarea>
-                </li>
-            </ul>
-        </section>
+        <div class="form-row">
+          <div class="form-col">
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-col">
+            <div class="form-group">
+              <label for="fechaEvento">Fecha del evento</label>
+              <input type="date" id="fechaEvento" name="fechaEvento" class="form-control" required>
+            </div>
+          </div>
+        </div>
 
+        <!-- Sección 1: Planificación Previa -->
+        <div class="logistics-stages">
+          <div class="stage-title">1. Planificación Previa</div>
+          
+          <div class="form-group">
+            <label for="eventoTipo">Tipo de evento</label>
+            <select id="eventoTipo" name="eventoTipo" class="form-control" required>
+              <option value="">Seleccionar...</option>
+              <option value="corporativo">Evento corporativo</option>
+              <option value="social">Evento social</option>
+              <option value="mixto">Mixto</option>
+            </select>
+          </div>
+          
+          <div id="camposAdicionales"></div>
+          
+          <div class="form-group">
+            <label for="espacio">Tipo de espacio</label>
+            <select id="espacio" name="espacio" class="form-control" required>
+              <option value="">Seleccionar...</option>
+              <option value="salonPrincipal">Salón Principal</option>
+              <option value="zonaDescanso">Zona de Descanso</option>
+              <option value="zonaExhibicion">Zona de Exhibición</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Tipo de catering</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="buffet" name="catering" value="buffet">
+                <label for="buffet">Buffet</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="servicioPlato" name="catering" value="servicioPlato">
+                <label for="servicioPlato">Servicio a la Mesa</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="coctail" name="catering" value="coctail">
+                <label for="coctail">Coctelería</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="estaciones" name="catering" value="estaciones">
+                <label for="estaciones">Estaciones gastronómicas</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentariosPlanificacion">Comentarios sobre planificación previa</label>
+            <textarea id="comentariosPlanificacion" name="comentariosPlanificacion" class="form-control" rows="3" placeholder="Detalles adicionales sobre la planificación de tu evento..."></textarea>
+          </div>
+        </div>
         
-        <section>
-            <div class="section-title">3. Durante el Evento</div>
-            <ul>
-                <li>
-                    <label for="registro">Selecciona el tipo de registro de asistentes:</label>
-                    <select id="registro" name="registro">
-                        <option value="manual">Manual</option>
-                        <option value="electrico">Electrónico</option>
-                    </select>
-                </li>
-                <li>Control de tiempos y actividades</li>
-                <li>Atención al cliente y resolución de imprevistos</li>
-                
-                <li>
-                    <label for="comentariosEjecucion">Comentarios adicionales durante el evento:</label>
-                    <textarea id="comentariosEjecucion" name="comentariosEjecucion"></textarea>
-                </li>
-            </ul>
-        </section>
-
-     
-        <section>
-            <div class="section-title">4. Cierre del Evento</div>
-            <ul>
-                <li>
-                    <label for="encuestas">¿Se realizarán encuestas de satisfacción?</label><br>
-                    <input type="radio" id="encuestasSi" name="encuestas" value="si">
-                    <label for="encuestasSi">Sí</label>
-                    <input type="radio" id="encuestasNo" name="encuestas" value="no">
-                    <label for="encuestasNo">No</label>
-                </li>
-                <li>Limpieza final de las instalaciones</li>
-               
-                <li>
-                    <label for="comentariosCierre">Comentarios sobre el cierre del evento:</label>
-                    <textarea id="comentariosCierre" name="comentariosCierre"></textarea>
-                </li>
-            </ul>
-        </section>
-
+        <!-- Sección 2: Coordinación de Recursos -->
+        <div class="logistics-stages">
+          <div class="stage-title">2. Coordinación de Recursos</div>
+          <div class="form-group">
+            <label>Equipos tecnológicos necesarios</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="audio" name="equiposTecnologia" value="audio">
+                <label for="audio">Audio</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="video" name="equiposTecnologia" value="video">
+                <label for="video">Video</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="wifi" name="equiposTecnologia" value="wifi">
+                <label for="wifi">Wi-Fi</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="iluminacion" name="equiposTecnologia" value="iluminacion">
+                <label for="iluminacion">Iluminación especial</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="traduccion" name="equiposTecnologia" value="traduccion">
+                <label for="traduccion">Traducción simultánea</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Personal necesario</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="coordinadores" name="personal" value="coordinadores">
+                <label for="coordinadores">Coordinadores</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="asistentes" name="personal" value="asistentes">
+                <label for="asistentes">Asistentes</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="tecnicos" name="personal" value="tecnicos">
+                <label for="tecnicos">Técnicos</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="seguridad" name="personal" value="seguridad">
+                <label for="seguridad">Seguridad</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="protocolo" name="personal" value="protocolo">
+                <label for="protocolo">Protocolo</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentariosRecursos">Comentarios sobre recursos</label>
+            <textarea id="comentariosRecursos" name="comentariosRecursos" class="form-control" rows="3" placeholder="Detalles adicionales sobre los recursos necesarios..."></textarea>
+          </div>
+        </div>
         
-        <section>
-            <div class="section-title">5. Post-evento</div>
-            <ul>
-                <li>
-                    <label for="evaluacion">¿Se realizará una evaluación de resultados?</label><br>
-                    <input type="radio" id="evaluacionSi" name="evaluacion" value="si">
-                    <label for="evaluacionSi">Sí</label>
-                    <input type="radio" id="evaluacionNo" name="evaluacion" value="no">
-                    <label for="evaluacionNo">No</label>
-                </li>
-                <li>Revisión de proveedores (calidad de servicios)</li>
-                <li>Relaciones públicas (agradecimientos, contenido en redes sociales)</li>
-                
-                <li>
-                    <label for="comentariosPostEvento">Comentarios post-evento:</label>
-                    <textarea id="comentariosPostEvento" name="comentariosPostEvento"></textarea>
-                </li>
-            </ul>
-        </section>
-
+        <!-- Sección 3: Durante el Evento -->
+        <div class="logistics-stages">
+          <div class="stage-title">3. Durante el Evento</div>
+          
+          <div class="form-group">
+            <label for="registro">Tipo de registro de asistentes</label>
+            <select id="registro" name="registro" class="form-control">
+              <option value="">Seleccionar...</option>
+              <option value="manual">Manual</option>
+              <option value="electronico">Electrónico</option>
+              <option value="mixto">Mixto</option>
+              <option value="ninguno">Ninguno</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="cronograma">¿Necesitas planificación de cronograma detallado?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="cronogramaSi" name="cronograma" value="si">
+                <label for="cronogramaSi">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="cronogramaNo" name="cronograma" value="no">
+                <label for="cronogramaNo">No</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="protocoloEmergencia">¿Requieres protocolo de emergencias?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="protocoloSi" name="protocoloEmergencia" value="si">
+                <label for="protocoloSi">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="protocoloNo" name="protocoloEmergencia" value="no">
+                <label for="protocoloNo">No</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentariosEjecucion">Comentarios sobre la ejecución del evento</label>
+            <textarea id="comentariosEjecucion" name="comentariosEjecucion" class="form-control" rows="3" placeholder="Detalles adicionales sobre la ejecución..."></textarea>
+          </div>
+        </div>
         
-        <button type="submit">Enviar</button>
-    </form>
+        <!-- Sección 4: Cierre del Evento -->
+        <div class="logistics-stages">
+          <div class="stage-title">4. Cierre del Evento</div>
+          
+          <div class="form-group">
+            <label for="encuestas">¿Se realizarán encuestas de satisfacción?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="encuestasSi" name="encuestas" value="si">
+                <label for="encuestasSi">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="encuestasNo" name="encuestas" value="no">
+                <label for="encuestasNo">No</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="desmontaje">¿Requieres planificación de desmontaje y limpieza?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="desmontajeSi" name="desmontaje" value="si">
+                <label for="desmontajeSi">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="desmonstajeNo" name="desmontaje" value="no">
+                <label for="desmonstajeNo">No</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentariosCierre">Comentarios sobre el cierre del evento</label>
+            <textarea id="comentariosCierre" name="comentariosCierre" class="form-control" rows="3" placeholder="Detalles adicionales sobre el cierre del evento..."></textarea>
+          </div>
+        </div>
+        
+        <!-- Sección 5: Post-evento -->
+        <div class="logistics-stages">
+          <div class="stage-title">5. Post-evento</div>
+          
+          <div class="form-group">
+            <label for="evaluacion">¿Se realizará una evaluación de resultados?</label>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="evaluacionSi" name="evaluacion" value="si">
+                <label for="evaluacionSi">Sí</label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="evaluacionNo" name="evaluacion" value="no">
+                <label for="evaluacionNo">No</label>
+              </div>
+            </div>enviar soli
+          </div>
+          
+          <div class="form-group">
+            <label>¿Qué servicios post-evento necesitas?</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="informeFinal" name="serviciosPostEvento" value="informeFinal">
+                <label for="informeFinal">Informe final</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="memoriaFotografica" name="serviciosPostEvento" value="memoriaFotografica">
+                <label for="memoriaFotografica">Memoria fotográfica</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="relacionesPublicas" name="serviciosPostEvento" value="relacionesPublicas">
+                <label for="relacionesPublicas">Relaciones públicas</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="seguimientoContable" name="serviciosPostEvento" value="seguimientoContable">
+                <label for="seguimientoContable">Seguimiento contable</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentariosPostEvento">Comentarios adicionales post-evento</label>
+            <textarea id="comentariosPostEvento" name="comentariosPostEvento" class="form-control" rows="3" placeholder="Detalles adicionales sobre el post-evento..."></textarea>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="necesidades">Necesidades específicas adicionales</label>
+          <textarea id="necesidades" name="necesidades" class="form-control" rows="5" placeholder="¿Hay alguna otra necesidad especial que debamos considerar para la logística de tu evento?"></textarea>
+        </div>plani
+        
+        <div class="form-submit">
+          <a href="decoracion.html">
+            <button type="submit" class="btn-primary">Enviar solicitud</button>
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <section class="logistics-steps">
+      <div class="container">
+        <div class="section-title">
+          <h2>Nuestro Proceso de Logística</h2>
+          <p>Seguimos un enfoque estructurado para asegurar que tu evento se desarrolle sin contratiempos</p>
+        </div>
+        
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Consulta inicial</h3>
+            <p>Analizamos tus necesidades y establecemos los objetivos específicos del evento</p>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Planificación</h3>
+            <p>Desarrollamos un plan detallado y cronograma para cada aspecto logístico</p>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Coordinación</h3>
+            <p>Gestionamos proveedores, personal y recursos técnicos</p>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Ejecución</h3>
+            <p>Supervisamos cada detalle durante el evento para un desarrollo perfecto</p>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">5</div>
+            <h3>Evaluación</h3>
+            <p>Analizamos resultados y generamos informes finales de satisfacción</p>
+          </div>
+        </div>
+      </div>
+    </section>
 </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Funcionalidad para la personalización de decoración
+      const colorPrimary = document.getElementById('color-primary');
+      const colorSecondary = document.getElementById('color-secondary');
+      const styleOptions = document.querySelectorAll('.style-option');
+      const previewRoom = document.getElementById('decorationPreview');
+      
+      if (colorPrimary && colorSecondary) {
+        colorPrimary.addEventListener('change', updatePreview);
+        colorSecondary.addEventListener('change', updatePreview);
+      }
+      
+      if (styleOptions) {
+        styleOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Eliminar clase 'selected' de todas las opciones
+            styleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Agregar clase 'selected' a la opción elegida
+            this.classList.add('selected');
+            updatePreview();
+          });
+        });
+      }
+      
+      function updatePreview() {
+        // Actualizar vista previa con los colores seleccionados
+        if (previewRoom) {
+          const walls = previewRoom.querySelector('.preview-walls');
+          const floor = previewRoom.querySelector('.preview-floor');
+          const table = previewRoom.querySelector('.preview-table');
+          
+          if (colorPrimary && colorPrimary.value !== 'ninguno' && walls) {
+            walls.style.backgroundColor = colorPrimary.value;
+          }
+          
+          if (colorSecondary && colorSecondary.value !== 'ninguno' && floor) {
+            floor.style.backgroundColor = colorSecondary.value;
+          }
+          
+          // Actualizar estilo según la selección
+          const selectedStyle = document.querySelector('.style-option.selected');
+          if (selectedStyle && table) {
+            const style = selectedStyle.getAttribute('data-style');
+            
+            switch(style) {
+              case 'rustico':
+                table.style.backgroundColor = '#8B4513';
+                break;
+              case 'minimalista':
+                table.style.backgroundColor = '#f0f0f0';
+                break;
+              case 'vintage':
+                table.style.backgroundColor = '#D2B48C';
+                break;
+              case 'boho':
+                table.style.backgroundColor = '#CD853F';
+                break;
+              default: // elegante
+                table.style.backgroundColor = '#a67c52';
+            }
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

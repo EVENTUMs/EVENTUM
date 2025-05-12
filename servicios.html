@@ -1,11 +1,602 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios - EVENTUM</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+        .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--text-light);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(24, 40, 72, 0.95);
+      color: var(--text-light);
+      padding-top: 70px;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1000;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      letter-spacing: 3px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding-left: 30px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .service-detail {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+    }
+    
+    .service-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .service-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .service-image {
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .service-card:hover .service-image img {
+      transform: scale(1.1);
+    }
+    
+    .service-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .service-content h3 {
+      margin-bottom: 15px;
+      color: var(--text-dark);
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .service-content h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+    
+    .service-features {
+      list-style: none;
+      margin: 20px 0;
+      padding: 0;
+    }
+    
+    .service-features li {
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .service-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    .service-price {
+      margin-top: auto;
+      text-align: center;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 5px;
+    }
+    
+    .price-amount {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+    
+    .price-period {
+      display: block;
+      font-size: 0.9rem;
+      color: #777;
+    }
+    
+    .service-button {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    .process-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--bg-dark), #2a5298);
+      color: var(--text-light);
+    }
+    
+    .process-steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 50px;
+      position: relative;
+    }
+    
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 50px;
+      left: 20%;
+      right: 20%;
+      height: 3px;
+      background: var(--primary-color);
+      z-index: 1;
+    }
+    
+    .process-step {
+      width: 200px;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .step-number {
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+    
+    .process-step h3 {
+      margin-bottom: 15px;
+    }
+    
+    .faq-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+    }
+    
+    .faq-container {
+      max-width: 800px;
+      margin: 50px auto 0;
+    }
+    
+    .faq-item {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .faq-question {
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-item.active .faq-question::after {
+      content: '-';
+    }
+    
+    .faq-item.active .faq-answer {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .process-steps::before {
+        display: none;
+      }
+      
+      .process-step {
+        width: 100%;
+        margin-bottom: 40px;
+      }
+    }
+  </style>
 </head>
 <body>
-    
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <div class="sidebar" id="sidebar">
+    <h2>EVENTUM</h2>
+    <ul>
+      <li><a href="nosotros.html">Inicio</a></li>
+      
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="galeria.html">Galería</a></li>
+
+      
+      <li><a href="logistica.html">Logística</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div class="logo">
+        <h1>EVENTUM</h1>
+      </div>
+    </header>
+
+    <div class="hero" style="background-image: url('https://source.unsplash.com/random/1920x1080/?event-service');">
+      <div class="hero-content">
+        <h2>Nuestros Servicios</h2>
+        <p>Soluciones integrales para todo tipo de eventos</p>
+      </div>
+    </div>
+
+    <section class="service-detail">
+      <div class="container">
+        <h2>Servicios Que Ofrecemos</h2>
+        <p class="section-subtitle">Adaptados a cada tipo de evento y necesidad</p>
+        
+        <div class="service-detail-grid">
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?wedding" alt="Boda">
+            </div>
+            <div class="service-content">
+              <h3>Bodas</h3>
+              <p>Hacemos realidad el día más especial de tu vida con una planificación personalizada.</p>
+              <ul class="service-features">
+                <li>Coordinación completa del evento</li>
+                <li>Selección de locación</li>
+                <li>Decoración personalizada</li>
+                <li>Coordinación de proveedores</li>
+                <li>Asesoría en protocolo</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $3500</span>
+                <span class="price-period">Consultar por paquetes</span>
+              </div>
+              <div class="service-button">
+                <a href="contacto.html" class="btn-secondary">Solicitar Información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?corporate-event" alt="Evento Corporativo">
+            </div>
+            <div class="service-content">
+              <h3>Eventos Corporativos</h3>
+              <p>Organizamos reuniones empresariales exitosas que reflejan la imagen de tu compañía.</p>
+              <ul class="service-features">
+                <li>Conferencias y seminarios</li>
+                <li>Lanzamientos de producto</li>
+                <li>Cenas corporativas</li>
+                <li>Team building</li>
+                <li>Equipamiento audiovisual</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $2800</span>
+                <span class="price-period">Presupuesto personalizado</span>
+              </div>
+              <div class="service-button">
+                <a href="contacto.html" class="btn-secondary">Solicitar Información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?birthday-party" alt="Cumpleaños">
+            </div>
+            <div class="service-content">
+              <h3>Cumpleaños</h3>
+              <p>Celebraciones inolvidables para todas las edades con temáticas a elección.</p>
+              <ul class="service-features">
+                <li>Decoración temática</li>
+                <li>Animación y entretenimiento</li>
+                <li>Catering personalizado</li>
+                <li>Fotografía y video</li>
+                <li>Souvenirs personalizados</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $1500</span>
+                <span class="price-period">Según número de invitados</span>
+              </div>
+              <div class="service-button">
+                <a href="contacto.html" class="btn-secondary">Solicitar Información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?graduation" alt="Graduación">
+            </div>
+            <div class="service-content">
+              <h3>Graduaciones</h3>
+              <p>Celebra tus logros académicos con una fiesta a la altura de tu esfuerzo.</p>
+              <ul class="service-features">
+                <li>Ceremonias formales</li>
+                <li>Fiestas post-graduación</li>
+                <li>Decoración institucional</li>
+                <li>Coordinación de invitados</li>
+                <li>Recuerdos y fotografía</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $2200</span>
+                <span class="price-period">Eventos grupales o individuales</span>
+              </div>
+              <div class="service-button">
+                <a href="contacto.html" class="btn-secondary">Solicitar Información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?concert" alt="Eventos Sociales">
+            </div>
+            <div class="service-content">
+              <h3>Eventos Sociales</h3>
+              <p>Desde aniversarios hasta reencuentros, organizamos cada celebración con un toque único.</p>
+              <ul class="service-features">
+                <li>Fiestas temáticas</li>
+                <li>Aniversarios</li>
+                <li>Reencuentros</li>
+                <li>Despedidas</li>
+                <li>Eventos benéficos</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $1800</span>
+                <span class="price-period">Según complejidad</span>
+              </div>
+              <div class="service-button">
+                <a href="contacto.html" class="btn-secondary">Solicitar Información</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://source.unsplash.com/random/600x400/?decoration" alt="Servicio de Decoración">
+            </div>
+            <div class="service-content">
+              <h3>Servicio de Decoración</h3>
+              <p>Transformamos cualquier espacio con diseños personalizados que capturan la esencia de tu evento.</p>
+              <ul class="service-features">
+                <li>Diseño de ambientes</li>
+                <li>Montaje y desmontaje</li>
+                <li>Iluminación decorativa</li>
+                <li>Centros de mesa</li>
+                <li>Decoración floral</li>
+              </ul>
+              <div class="service-price">
+                <span class="price-amount">Desde $1200</span>
+                <span class="price-period">Según dimensiones</span>
+              </div>
+              <div class="service-button">
+                <a href="decoracion.html" class="btn-secondary">Ver Opciones</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+          <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Funcionalidad para la personalización de decoración
+      const colorPrimary = document.getElementById('color-primary');
+      const colorSecondary = document.getElementById('color-secondary');
+      const styleOptions = document.querySelectorAll('.style-option');
+      const previewRoom = document.getElementById('decorationPreview');
+      
+      if (colorPrimary && colorSecondary) {
+        colorPrimary.addEventListener('change', updatePreview);
+        colorSecondary.addEventListener('change', updatePreview);
+      }
+      
+      if (styleOptions) {
+        styleOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Eliminar clase 'selected' de todas las opciones
+            styleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Agregar clase 'selected' a la opción elegida
+            this.classList.add('selected');
+            updatePreview();
+          });
+        });
+      }
+      
+      function updatePreview() {
+        // Actualizar vista previa con los colores seleccionados
+        if (previewRoom) {
+          const walls = previewRoom.querySelector('.preview-walls');
+          const floor = previewRoom.querySelector('.preview-floor');
+          const table = previewRoom.querySelector('.preview-table');
+          
+          if (colorPrimary && colorPrimary.value !== 'ninguno' && walls) {
+            walls.style.backgroundColor = colorPrimary.value;
+          }
+          
+          if (colorSecondary && colorSecondary.value !== 'ninguno' && floor) {
+            floor.style.backgroundColor = colorSecondary.value;
+          }
+          
+          // Actualizar estilo según la selección
+          const selectedStyle = document.querySelector('.style-option.selected');
+          if (selectedStyle && table) {
+            const style = selectedStyle.getAttribute('data-style');
+            
+            switch(style) {
+              case 'rustico':
+                table.style.backgroundColor = '#8B4513';
+                break;
+              case 'minimalista':
+                table.style.backgroundColor = '#f0f0f0';
+                break;
+              case 'vintage':
+                table.style.backgroundColor = '#D2B48C';
+                break;
+              case 'boho':
+                table.style.backgroundColor = '#CD853F';
+                break;
+              default: // elegante
+                table.style.backgroundColor = '#a67c52';
+            }
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

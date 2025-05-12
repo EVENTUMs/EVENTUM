@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería - EVENTUM</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+        .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--text-light);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(24, 40, 72, 0.95);
+      color: var(--text-light);
+      padding-top: 70px;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1000;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      letter-spacing: 3px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding-left: 30px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-gap: 20px;
+      padding: 40px 0;
+    }
+    
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+      transition: all 0.5s ease;
+    }
+    
+    .gallery-item:hover .gallery-image {
+      transform: scale(1.05);
+    }
+    
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 20px;
+      color: white;
+      transform: translateY(100%);
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover .gallery-overlay {
+      transform: translateY(0);
+    }
+    
+    .gallery-category {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .gallery-title {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    
+    .gallery-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    
+    .gallery-filter {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--text-dark);
+      padding: 8px 20px;
+      margin: 5px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    .gallery-filter.active, .gallery-filter:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+    }
+    
+    .modal-gallery {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-gallery.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      position: relative;
+    }
+    
+    .modal-img {
+      display: block;
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 5px;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    
+    .gallery-title-section {
+      text-align: center;
+      padding: 60px 0 20px;
+      background: linear-gradient(135deg, var(--bg-dark), #2a5298);
+      color: var(--text-light);
+    }
+    
+    .gallery-title-section h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .gallery-title-section p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <div class="sidebar" id="sidebar">
+    <h2>EVENTUM</h2>
+    <ul>
+      <li><a href="nosotros.html">Inicio</a></li>
+      
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="galeria.html">Galería</a></li>
+
+      
+      <li><a href="logistica.html">Logística</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div class="logo">
+        <h1>EVENTUM</h1>
+      </div>
+    </header>
+
+    <div class="gallery-title-section">
+      <div class="container">
+        <h1>Nuestra Galería</h1>
+        <p>Explora nuestros trabajos más destacados y déjate inspirar para tu próximo evento</p>
+      </div>
+    </div>
+
+    <section class="gallery-section">
+      <div class="container">
+        <div class="gallery-filters">
+          <button class="gallery-filter active" data-filter="all">Todos</button>
+          <button class="gallery-filter" data-filter="bodas">Bodas</button>
+          <button class="gallery-filter" data-filter="corporativos">Corporativos</button>
+          <button class="gallery-filter" data-filter="cumpleanos">Cumpleaños</button>
+          <button class="gallery-filter" data-filter="graduaciones">Graduaciones</button>
+        </div>
+
+        <div class="gallery-container">
+          <div class="gallery-item" data-category="bodas">
+            <img src="/api/placeholder/600/400" alt="Boda elegante" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Boda</span>
+              <h3 class="gallery-title">Boda Elegante en Jardín</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="corporativos">
+            <img src="/api/placeholder/600/400" alt="Evento corporativo" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Corporativo</span>
+              <h3 class="gallery-title">Conferencia Anual Empresa XYZ</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="cumpleanos">
+            <img src="/api/placeholder/600/400" alt="Fiesta de cumpleaños" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Cumpleaños</span>
+              <h3 class="gallery-title">Fiesta Temática 30 Años</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="graduaciones">
+            <img src="/api/placeholder/600/400" alt="Ceremonia de graduación" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Graduación</span>
+              <h3 class="gallery-title">Ceremonia Universidad ABC</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="bodas">
+            <img src="/api/placeholder/600/400" alt="Decoración de boda" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Boda</span>
+              <h3 class="gallery-title">Decoración Rústica Chic</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="corporativos">
+            <img src="/api/placeholder/600/400" alt="Lanzamiento de producto" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Corporativo</span>
+              <h3 class="gallery-title">Lanzamiento de Producto</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="cumpleanos">
+            <img src="/api/placeholder/600/400" alt="Cumpleaños infantil" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Cumpleaños</span>
+              <h3 class="gallery-title">Fiesta Infantil Temática</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="graduaciones">
+            <img src="/api/placeholder/600/400" alt="Fiesta de graduación" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Graduación</span>
+              <h3 class="gallery-title">Fiesta Post-Graduación</h3>
+            </div>
+          </div>
+          
+          <div class="gallery-item" data-category="bodas">
+            <img src="/api/placeholder/600/400" alt="Recepción de boda" class="gallery-image">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Boda</span>
+              <h3 class="gallery-title">Recepción Nocturna</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal-gallery" id="modalGallery">
+      <div class="modal-content">
+        <button class="close-modal">&times;</button>
+        <img src="" alt="Imagen ampliada" id="modalImg" class="modal-img">
+      </div>
+    </div>
+
+    <section class="cta">
+      <div class="container">
+        <h2>¿Te gustaría un evento así?</h2>
+        <p>Contáctanos y hagamos realidad tu evento soñado</p>
+        <a href="contacto.html" class="btn-primary">Solicitar presupuesto</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>EVENTUM</h3>
+            <p>Creadores de experiencias memorables desde 2015</p>
+          </div>
+          <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>📞 +54 11 1234 5678</p>
+            <p>📧 contacto@eventum.com</p>
+          </div>
+          <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+              <a href="#" class="social-icon">Facebook</a>
+              <a href="#" class="social-icon">Instagram</a>
+              <a href="#" class="social-icon">Twitter</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 EVENTUM - Todos los derechos reservados</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Funcionalidad para la personalización de decoración
+      const colorPrimary = document.getElementById('color-primary');
+      const colorSecondary = document.getElementById('color-secondary');
+      const styleOptions = document.querySelectorAll('.style-option');
+      const previewRoom = document.getElementById('decorationPreview');
+      
+      if (colorPrimary && colorSecondary) {
+        colorPrimary.addEventListener('change', updatePreview);
+        colorSecondary.addEventListener('change', updatePreview);
+      }
+      
+      if (styleOptions) {
+        styleOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Eliminar clase 'selected' de todas las opciones
+            styleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Agregar clase 'selected' a la opción elegida
+            this.classList.add('selected');
+            updatePreview();
+          });
+        });
+      }
+      
+      function updatePreview() {
+        // Actualizar vista previa con los colores seleccionados
+        if (previewRoom) {
+          const walls = previewRoom.querySelector('.preview-walls');
+          const floor = previewRoom.querySelector('.preview-floor');
+          const table = previewRoom.querySelector('.preview-table');
+          
+          if (colorPrimary && colorPrimary.value !== 'ninguno' && walls) {
+            walls.style.backgroundColor = colorPrimary.value;
+          }
+          
+          if (colorSecondary && colorSecondary.value !== 'ninguno' && floor) {
+            floor.style.backgroundColor = colorSecondary.value;
+          }
+          
+          // Actualizar estilo según la selección
+          const selectedStyle = document.querySelector('.style-option.selected');
+          if (selectedStyle && table) {
+            const style = selectedStyle.getAttribute('data-style');
+            
+            switch(style) {
+              case 'rustico':
+                table.style.backgroundColor = '#8B4513';
+                break;
+              case 'minimalista':
+                table.style.backgroundColor = '#f0f0f0';
+                break;
+              case 'vintage':
+                table.style.backgroundColor = '#D2B48C';
+                break;
+              case 'boho':
+                table.style.backgroundColor = '#CD853F';
+                break;
+              default: // elegante
+                table.style.backgroundColor = '#a67c52';
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
