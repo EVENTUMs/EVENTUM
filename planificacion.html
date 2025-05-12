@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planificar Evento - EVENTUM</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+        .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--text-light);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(24, 40, 72, 0.95);
+      color: var(--text-light);
+      padding-top: 70px;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1000;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      letter-spacing: 3px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding-left: 30px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Estilos específicos para planificación */
+    .calendar-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+    }
+    
+    .planner-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 50px;
+    }
+    
+    .planner-sidebar {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .planner-main {
+      flex: 2;
+      min-width: 400px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .location-preview {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+    
+    .form-group select,
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+    
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .calendar-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    
+    .available {
+      background-color: #fff;
+      border: 1px solid var(--primary-color);
+      color: var(--text-dark);
+    }
+    
+    .available:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+    }
+    
+    .unavailable {
+      background-color: #f8f8f8;
+      border: 1px solid #ddd;
+      color: #aaa;
+      cursor: not-allowed;
+    }
+    
+    .selected {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      transform: scale(1.05);
+      font-weight: bold;
+    }
+    
+    .summary-section {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    
+    .summary-total {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón para abrir el menú lateral -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <!-- Barra lateral -->
+  <div class="sidebar" id="sidebar">
+    <h2>EVENTUM</h2>
+    <ul>
+      <li><a href="nosotros.html">Inicio</a></li>
+      
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="galeria.html">Galería</a></li>
+
+      
+      <li><a href="logistica.html">Logística</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <div class="logo">
+        <h1>EVENTUM</h1>
+      </div>
+    </header>
+
+    <div class="hero" style="background-image: url('https://source.unsplash.com/random/1920x1080/?event-planning');">
+      <div class="hero-content">
+        <h2>Planifica Tu Evento</h2>
+        <p>Crea experiencias únicas con nuestra herramienta de planificación</p>
+      </div>
+    </div>
+
+    <section class="calendar-section">
+      <div class="container">
+        <h2>Personaliza Tu Evento</h2>
+        <p class="section-subtitle">Selecciona ubicación, fecha y más para tu evento</p>
+        
+        <div class="planner-container">
+          <div class="planner-sidebar">
+            <h3>Detalles del Evento</h3>
+            
+            <div class="form-group">
+              <label for="eventType">Tipo de Evento</label>
+              <select id="eventType">
+                <option value="wedding">Boda</option>
+                <option value="corporate">Evento Corporativo</option>
+                <option value="birthday">Cumpleaños</option>
+                <option value="graduation">Graduación</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="guests">Número de Invitados</label>
+              <input type="number" id="guests" min="10" max="500" placeholder="Ej: 100">
+            </div>
+            
+            <div class="form-group">
+              <label for="eventDate">Fecha del Evento</label>
+              <input type="text" id="eventDate" readonly placeholder="Selecciona en el calendario">
+            </div>
+            
+            <div class="summary-section">
+              <h3>Resumen</h3>
+              <div class="summary-item">
+                <span>Tipo de evento:</span>
+                <span id="summaryType">Boda</span>
+              </div>
+              <div class="summary-item">
+                <span>Ubicación:</span>
+                <span id="summaryLocation">Salón Luminoso</span>
+              </div>
+              <div class="summary-item">
+                <span>Fecha:</span>
+                <span id="summaryDate">Por seleccionar</span>
+              </div>
+              <div class="summary-item">
+                <span>Invitados:</span>
+                <span id="summaryGuests">100</span>
+              </div>
+              <div class="summary-total">
+                <span>Presupuesto estimado:</span>
+                <span id="summaryTotal">$3,500</span>
+              </div>
+              
+              <a href="contacto.html" class="btn-primary">Solicitar Reserva</a>
+            </div>
+          </div>
+          
+          <div class="planner-main">
+            <h3>Selecciona Ubicación y Fecha</h3>
+            
+            <div class="form-group">
+              <label for="location">Ubicación</label>
+              <select id="location">
+                <option value="salon1">Salón Luminoso (hasta 150 personas)</option>
+                <option value="salon2">Salón Elegante (hasta 250 personas)</option>
+                <option value="salon3">Salón Panorámico (hasta 400 personas)</option>
+                <option value="jardin">Jardín Central (hasta 200 personas)</option>
+              </select>
+            </div>
+            
+            <div class="location-preview" style="background-image: url('https://source.unsplash.com/random/600x400/?event-hall')"></div>
+            
+            <h4>Selecciona una Fecha</h4>
+            <p>Las fechas en gris no están disponibles</p>
+            
+            <div class="calendar-header">
+              <div>Dom</div>
+              <div>Lun</div>
+              <div>Mar</div>
+              <div>Mié</div>
+              <div>Jue</div>
+              <div>Vie</div>
+              <div>Sáb</div>
+            </div>
+            
+            <div class="calendar" id="calendario">
+              <!-- Los días del calendario se generarán con JavaScript -->
+            </div>
+            
+            <input type="hidden" id="selectedDate" value="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <h2>¿Necesitas ayuda personalizada?</h2>
+        <p>Nuestros organizadores están listos para asesorarte y hacer de tu evento algo inolvidable</p>
+        <a href="contacto.html" class="btn-primary">Contáctanos Ahora</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>EVENTUM</h3>
+            <p>Creadores de experiencias memorables desde 2015</p>
+          </div>
+          <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>📞 +54 11 1234 5678</p>
+            <p>📧 contacto@eventum.com</p>
+          </div>
+          <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+              <a href="#" class="social-icon">Facebook</a>
+              <a href="#" class="social-icon">Instagram</a>
+              <a href="#" class="social-icon">Twitter</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 EVENTUM - Todos los derechos reservados</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Código específico para la página de planificación
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarContainer = document.getElementById('calendario');
+      
+      // Fechas no disponibles (simuladas)
+      const unavailableDates = ['2025-05-10', '2025-05-15', '2025-05-20', '2025-05-25'];
+      
+      // Generar el calendario para el mes actual
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth();
+      const currentYear = currentDate.getFullYear();
+      
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+      
+      // Añadir espacios en blanco para el primer día del mes
+      for (let i = 0; i < firstDayOfMonth; i++) {
+        const emptyDay = document.createElement('div');
+        calendarContainer.appendChild(emptyDay);
+      }
+      
+      // Añadir los días del mes
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isUnavailable = unavailableDates.includes(date);
+        
+        const dayElement = document.createElement('div');
+        dayElement.textContent = day;
+        dayElement.className = isUnavailable ? 'day unavailable' : 'day available';
+        
+        if (!isUnavailable) {
+          dayElement.addEventListener('click', function() {
+            document.querySelectorAll('.day').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // Actualizar campo de fecha seleccionada
+            const dateInput = document.getElementById('eventDate');
+            const summaryDate = document.getElementById('summaryDate');
+            const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            
+            if (dateInput) {
+              const formattedDate = `${day} de ${monthNames[currentMonth]} de ${currentYear}`;
+              dateInput.value = formattedDate;
+              summaryDate.textContent = formattedDate;
+            }
+          });
+        }
+        
+        calendarContainer.appendChild(dayElement);
+      }
+      
+      // Actualizar imagen de previsualización al cambiar ubicación
+      const locationSelect = document.getElementById('location');
+      const locationPreview = document.querySelector('.location-preview');
+      const summaryLocation = document.getElementById('summaryLocation');
+      
+      locationSelect.addEventListener('change', function() {
+        const locations = {
+          'salon1': 'https://source.unsplash.com/random/600x400/?elegant-hall',
+          'salon2': 'https://source.unsplash.com/random/600x400/?wedding-venue',
+          'salon3': 'https://source.unsplash.com/random/600x400/?luxury-event',
+          'jardin': 'https://source.unsplash.com/random/600x400/?garden-party'
+        };
+        
+        const locationNames = {
+          'salon1': 'Salón Luminoso',
+          'salon2': 'Salón Elegante',
+          'salon3': 'Salón Panorámico',
+          'jardin': 'Jardín Central'
+        };
+        
+        locationPreview.style.backgroundImage = `url('${locations[this.value]}')`;
+        summaryLocation.textContent = locationNames[this.value];
+      });
+      
+      // Actualizar resumen al cambiar tipo de evento
+      const eventTypeSelect = document.getElementById('eventType');
+      const summaryType = document.getElementById('summaryType');
+      
+      eventTypeSelect.addEventListener('change', function() {
+        const eventTypes = {
+          'wedding': 'Boda',
+          'corporate': 'Evento Corporativo',
+          'birthday': 'Cumpleaños',
+          'graduation': 'Graduación',
+          'other': 'Otro'
+        };
+        
+        summaryType.textContent = eventTypes[this.value];
+      });
+      
+      // Actualizar número de invitados
+      const guestsInput = document.getElementById('guests');
+      const summaryGuests = document.getElementById('summaryGuests');
+      
+      guestsInput.addEventListener('input', function() {
+        summaryGuests.textContent = this.value;
+        
+        // Simular cálculo de presupuesto
+        const basePrice = 2000;
+        const guestPrice = 15;
+        const totalPrice = basePrice + (guestPrice * parseInt(this.value));
+        
+        document.getElementById('summaryTotal').textContent = '$' + totalPrice.toLocaleString();
+      });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Funcionalidad para la personalización de decoración
+      const colorPrimary = document.getElementById('color-primary');
+      const colorSecondary = document.getElementById('color-secondary');
+      const styleOptions = document.querySelectorAll('.style-option');
+      const previewRoom = document.getElementById('decorationPreview');
+      
+      if (colorPrimary && colorSecondary) {
+        colorPrimary.addEventListener('change', updatePreview);
+        colorSecondary.addEventListener('change', updatePreview);
+      }
+      
+      if (styleOptions) {
+        styleOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Eliminar clase 'selected' de todas las opciones
+            styleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Agregar clase 'selected' a la opción elegida
+            this.classList.add('selected');
+            updatePreview();
+          });
+        });
+      }
+      
+      function updatePreview() {
+        // Actualizar vista previa con los colores seleccionados
+        if (previewRoom) {
+          const walls = previewRoom.querySelector('.preview-walls');
+          const floor = previewRoom.querySelector('.preview-floor');
+          const table = previewRoom.querySelector('.preview-table');
+          
+          if (colorPrimary && colorPrimary.value !== 'ninguno' && walls) {
+            walls.style.backgroundColor = colorPrimary.value;
+          }
+          
+          if (colorSecondary && colorSecondary.value !== 'ninguno' && floor) {
+            floor.style.backgroundColor = colorSecondary.value;
+          }
+          
+          // Actualizar estilo según la selección
+          const selectedStyle = document.querySelector('.style-option.selected');
+          if (selectedStyle && table) {
+            const style = selectedStyle.getAttribute('data-style');
+            
+            switch(style) {
+              case 'rustico':
+                table.style.backgroundColor = '#8B4513';
+                break;
+              case 'minimalista':
+                table.style.backgroundColor = '#f0f0f0';
+                break;
+              case 'vintage':
+                table.style.backgroundColor = '#D2B48C';
+                break;
+              case 'boho':
+                table.style.backgroundColor = '#CD853F';
+                break;
+              default: // elegante
+                table.style.backgroundColor = '#a67c52';
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

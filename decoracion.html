@@ -1,364 +1,814 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decoración de Eventos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: white;
-            color: black;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decoración - EVENTUM</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        header {
-            background-color: #f2d000; /* Dorado */
-            padding: 20px;
-            text-align: center;
-            font-size: 2em;
-            color: white;
-        }
+    :root {
+      --primary-color: #f1c13c;
+      --primary-dark: #daac16;
+      --secondary-color: #00c9a7;
+      --text-dark: #333;
+      --text-light: #fff;
+      --bg-dark: #182848;
+      --bg-light: #f8f9fa;
+    }
 
-        .container {
-            padding: 20px;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        select {
-            padding: 10px;
-            font-size: 1em;
-            width: 100%;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-        h2 {
-            color: #f2d000; /* Dorado */
-            font-size: 1.5em;
-            margin-top: 40px;
-            margin-bottom: 10px;
-        }
+    header {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding: 20px 0;
+      text-align: center;
+    }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-        }
+    .logo h1 {
+      font-size: 2.5rem;
+      letter-spacing: 3px;
+    }
 
-        .bar {
-            margin-bottom: 30px;
-        }
+    .hero {
+      height: 50vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
 
-        .bar select {
-            width: 50%;
-            margin: 10px 0;
-        }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-        .footer {
-            background-color: #f2d000; /* Dorado */
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
+    .hero-content {
+      text-align: center;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
+    }
 
-    </style>
+    .hero-content h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-content p {
+      font-size: 1.5rem;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #777;
+    }
+
+    footer {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      padding: 60px 0 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .footer-section {
+      flex: 1;
+      margin-bottom: 20px;
+      min-width: 250px;
+      padding: 0 20px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-icon {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+      color: var(--primary-color);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      background-color: var(--primary-dark);
+    }
+
+    /* Barra lateral y menú - Adaptado de la página principal */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: var(--text-light);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-toggle:hover {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: rgba(24, 40, 72, 0.95);
+      color: var(--text-light);
+      padding-top: 70px;
+      transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1000;
+      box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      letter-spacing: 3px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 15px 20px;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      padding-left: 30px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Estilos específicos para la página de decoración */
+    .decoration-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+    }
+    
+    .decoration-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-top: 50px;
+    }
+    
+    .decoration-options {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .decoration-preview {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-group {
+      margin-bottom: 25px;
+    }
+    
+    .option-group h3 {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .color-option {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .color-swatch {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+    
+    .color-swatch:hover {
+      transform: scale(1.1);
+    }
+    
+    .color-swatch.selected {
+      border: 2px solid #000;
+      transform: scale(1.1);
+    }
+    
+    .style-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .style-option {
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .style-option:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .style-option.selected {
+      background-color: var(--primary-color);
+      color: var(--text-dark);
+      border-color: var(--primary-color);
+    }
+    
+    .preview-room {
+      width: 100%;
+      height: 300px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .preview-walls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+    }
+    
+    .preview-floor {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background-color: #f0f0f0;
+    }
+    
+    .preview-ceiling {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: #fff;
+    }
+    
+    .preview-table {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 10%;
+      background-color: #a67c52;
+      border-radius: 5px;
+    }
+    
+    .preview-chair {
+      position: absolute;
+      bottom: 20%;
+      width: 8%;
+      height: 15%;
+      background-color: #8B4513;
+      border-radius: 3px;
+    }
+    
+    .preview-chair:nth-child(1) { left: 25%; }
+    .preview-chair:nth-child(2) { left: 35%; }
+    .preview-chair:nth-child(3) { left: 45%; }
+    .preview-chair:nth-child(4) { left: 55%; }
+    .preview-chair:nth-child(5) { left: 65%; }
+    
+    .preview-decor {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40%;
+      height: 30%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    
+    .color-selector {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+    
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .gallery-caption {
+      padding: 15px;
+      background: #fff;
+      text-align: center;
+    }
+    
+    .option-item {
+      margin: 10px 0;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .decoration-container {
+        flex-direction: column;
+      }
+      
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+  <button class="menu-toggle" id="menuToggle">☰</button>
 
+  <div class="sidebar" id="sidebar">
+    <h2>EVENTUM</h2>
+    <ul>
+      <li><a href="nosotros.html">Inicio</a></li>
+      
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="galeria.html">Galería</a></li>
+
+      
+      <li><a href="logistica.html">Logística</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="main-content">
     <header>
-        Decorados y Ambientación
+      <div class="logo">
+        <h1>EVENTUM</h1>
+      </div>
     </header>
 
-    <div class="container">
-        <h2>Selecciona las opciones para tu evento:</h2>
-        
-        <div class="options-container">
-            <div class="bar">
-                <label for="bebidas">Bebidas:</label>
-                <select id="bebidas">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="sprite">Sprite</option>
-                    <option value="pepsi">Pepsi</option>
-                    <option value="coca-cola">Coca Cola</option>
-                    <option value="fanta">Fanta</option>
-                    <option value="seven-up">Seven Up</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-mantel">Color de Mantel:</label>
-                <select id="color-mantel">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-cortinas">Color de Cortinas:</label>
-                <select id="color-cortinas">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-alfombra">Color de Alfombra:</label>
-                <select id="color-alfombra">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-globos">Color de Globos:</label>
-                <select id="color-globos">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-apoya-vasos">Color de Apoya Vasos:</label>
-                <select id="color-apoya-vasos">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-sillas">Color de Sillas:</label>
-                <select id="color-sillas">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-almohadas">Color de Almohadas:</label>
-                <select id="color-almohadas">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-luces">Color de Luces:</label>
-                <select id="color-luces">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-
-            <div class="bar">
-                <label for="color-flores">Color de Flores Artificiales:</label>
-                <select id="color-flores">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="azul">Azul</option>
-                    <option value="amarillo">Amarillo</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="rosa">Rosa</option>
-                    <option value="naranja">Naranja</option>
-                    <option value="verde">Verde</option>
-                    <option value="violeta">Violeta</option>
-                    <option value="morado">Morado</option>
-                    <option value="turquesa">Turquesa</option>
-                    <option value="marrón">Marrón</option>
-                    <option value="negro">Negro</option>
-                    <option value="blanco">Blanco</option>
-                    <option value="gris">Gris</option>
-                    <option value="plateado">Plateado</option>
-                    <option value="dorado">Dorado</option>
-                    <option value="fucsia">Fucsia</option>
-                    <option value="lila">Lila</option>
-                    <option value="beige">Beige</option>
-                    <option value="celeste">Celeste</option>
-                    <option value="caqui">Caqui</option>
-                    <option value="púrpura">Púrpura</option>
-                </select>
-            </div>
-            
-            <div class="bar">
-                <label for="bebidas-alcoholicas">Bebidas Alcohólicas:</label>
-                <select id="bebidas-alcoholicas">
-                    <option value="ninguno">Ninguno</option>
-                    <option value="heineken">Heineken</option>
-                    <option value="quilmes">Quilmes</option>
-                    <option value="vino">Vino</option>
-                    <option value="vodka">Vodka</option>
-                    <option value="whisky">Whisky</option>
-                    <option value="caipirinha">Caipirinha</option>
-                </select>
-            </div>
-        </div>
+    <div class="hero" style="background-image: url('https://source.unsplash.com/random/1920x1080/?event-decoration');">
+      <div class="hero-content">
+        <h2>Decoración de Eventos</h2>
+        <p>Personaliza cada detalle para crear un ambiente único</p>
+      </div>
     </div>
 
-    <footer class="footer">
-        <p>&copy; Decoración Del Evento</p>
-    </footer>
+    <section class="decoration-section">
+      <div class="container">
+        <h2>Personaliza tu Decoración</h2>
+        <p class="section-subtitle">Crea un espacio único que refleje tu estilo y personalidad</p>
+        
+        <div class="decoration-container">
+          <div class="decoration-options">
+            <h3>Opciones de Decoración</h3>
+            
+            <div class="option-group">
+              <h3>Paleta de Colores</h3>
+              <p>Selecciona los colores principales para tu evento</p>
+              
+              <div class="color-option">
+                <select id="color-primary" class="color-selector">
+                  <option value="ninguno">Selecciona color principal</option>
+                  <option value="#f1c13c">Dorado</option>
+                  <option value="#d35400">Terracota</option>
+                  <option value="#8e44ad">Púrpura</option>
+                  <option value="#2ecc71">Esmeralda</option>
+                  <option value="#3498db">Azul Real</option>
+                  <option value="#e74c3c">Rojo</option>
+                  <option value="#1abc9c">Turquesa</option>
+                  <option value="#f39c12">Ámbar</option>
+                </select>
+              </div>
+              
+              <div class="color-option">
+                <select id="color-secondary" class="color-selector">
+                  <option value="ninguno">Selecciona color secundario</option>
+                  <option value="#ffffff">Blanco</option>
+                  <option value="#2c3e50">Azul Marino</option>
+                  <option value="#7f8c8d">Plata</option>
+                  <option value="#27ae60">Verde</option>
+                  <option value="#c0392b">Borgoña</option>
+                  <option value="#16a085">Verde Agua</option>
+                  <option value="#8e44ad">Violeta</option>
+                  <option value="#d35400">Naranja</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="option-group">
+              <h3>Estilo de Decoración</h3>
+              <p>Elige el estilo que mejor se adapte a tu visión</p>
+              
+              <div class="style-options">
+                <div class="style-option selected" data-style="elegante">Elegante</div>
+                <div class="style-option" data-style="rustico">Rústico</div>
+                <div class="style-option" data-style="minimalista">Minimalista</div>
+                <div class="style-option" data-style="vintage">Vintage</div>
+                <div class="style-option" data-style="boho">Bohemio</div>
+              </div>
+            </div>
+            
+            <div class="option-group">
+              <h3>Elementos Decorativos</h3>
+              <p>Personaliza con elementos adicionales</p>
+              
+              <div class="option-item">
+                <input type="checkbox" id="flores" checked>
+                <label for="flores">Arreglos Florales</label>
+              </div>
+              
+              <div class="option-item">
+                <input type="checkbox" id="velas">
+                <label for="velas">Velas y Candelabros</label>
+              </div>
+              
+              <div class="option-item">
+                <input type="checkbox" id="telas">
+                <label for="telas">Telas y Cortinados</label>
+              </div>
+              
+              <div class="option-item">
+                <input type="checkbox" id="luces">
+                <label for="luces">Iluminación Decorativa</label>
+              </div>
+              
+              <div class="option-item">
+                <input type="checkbox" id="centros">
+                <label for="centros">Centros de Mesa</label>
+              </div>
+            </div>
+            
+            <a href="planificacion.html" class="btn-primary">Solicitar Planificacion</a>
+          </div>
+          
+          <div class="decoration-preview">
+            <h3>Vista Preliminar</h3>
+            <p>Visualización básica de tus selecciones</p>
+            
+            <div class="preview-room" id="decorationPreview">
+              <div class="preview-walls"></div>
+              <div class="preview-floor"></div>
+              <div class="preview-ceiling"></div>
+              <div class="preview-table"></div>
+              <div class="preview-chair"></div>
+              <div class="preview-chair"></div>
+              <div class="preview-chair"></div>
+              <div class="preview-chair"></div>
+              <div class="preview-chair"></div>
+              <div class="preview-decor" style="background-image: url('https://source.unsplash.com/random/400x300/?floral-centerpiece')"></div>
+            </div>
+            
+            <p><strong>Nota:</strong> Esta es una visualización aproximada. Nuestros diseñadores crearán un concepto personalizado basado en tus preferencias.</p>
+          </div>
+        </div>
+        
+        <div class="gallery-section">
+          <h2>Inspiración de Decoración</h2>
+          <p>Explora algunos de nuestros diseños anteriores</p>
+          
+          <div class="gallery">
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?wedding-decoration" alt="Decoración de Boda" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Boda Elegante</h3>
+                <p>Arreglos florales con tonos pastel y dorado</p>
+              </div>
+            </div>
+            
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?corporate-event" alt="Evento Corporativo" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Evento Corporativo</h3>
+                <p>Diseño minimalista con acentos azules</p>
+              </div>
+            </div>
+            
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?birthday-party" alt="Fiesta de Cumpleaños" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Fiesta de Cumpleaños</h3>
+                <p>Colores vibrantes y decoración temática</p>
+              </div>
+            </div>
+            
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?rustic-wedding" alt="Boda Rústica" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Boda Rústica</h3>
+                <p>Elementos naturales y madera</p>
+              </div>
+            </div>
+            
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?gala-event" alt="Gala" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Gala Benéfica</h3>
+                <p>Decoración lujosa con cristales y velas</p>
+              </div>
+            </div>
+            
+            <div class="gallery-item">
+              <img src="https://source.unsplash.com/random/600x400/?baby-shower" alt="Baby Shower" class="gallery-image">
+              <div class="gallery-caption">
+                <h3>Baby Shower</h3>
+                <p>Decoración delicada en tonos suaves</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cta-section" style="margin-top: 80px; text-align: center;">
+          <h2>¿Listo para crear el ambiente perfecto?</h2>
+          <p>Nuestros diseñadores están esperando para hacer realidad tu visión</p>
+          <a href="contacto.html" class="btn-primary">Contactar ahora</a>
+        </div>
+      </div>
+    </section>
 
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>EVENTUM</h3>
+            <p>Creadores de experiencias memorables desde 2015</p>
+          </div>
+          <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>📞 +54 11 1234 5678</p>
+            <p>📧 contacto@eventum.com</p>
+          </div>
+          <div class="footer-section">
+            <h3>Síguenos</h3>
+            <div class="social-links">
+              <a href="#" class="social-icon">Facebook</a>
+              <a href="#" class="social-icon">Instagram</a>
+              <a href="#" class="social-icon">Twitter</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 EVENTUM - Todos los derechos reservados</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+      
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          sidebar.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Funcionalidad para la personalización de decoración
+      const colorPrimary = document.getElementById('color-primary');
+      const colorSecondary = document.getElementById('color-secondary');
+      const styleOptions = document.querySelectorAll('.style-option');
+      const previewRoom = document.getElementById('decorationPreview');
+      
+      if (colorPrimary && colorSecondary) {
+        colorPrimary.addEventListener('change', updatePreview);
+        colorSecondary.addEventListener('change', updatePreview);
+      }
+      
+      if (styleOptions) {
+        styleOptions.forEach(option => {
+          option.addEventListener('click', function() {
+            // Eliminar clase 'selected' de todas las opciones
+            styleOptions.forEach(opt => opt.classList.remove('selected'));
+            // Agregar clase 'selected' a la opción elegida
+            this.classList.add('selected');
+            updatePreview();
+          });
+        });
+      }
+      
+      function updatePreview() {
+        // Actualizar vista previa con los colores seleccionados
+        if (previewRoom) {
+          const walls = previewRoom.querySelector('.preview-walls');
+          const floor = previewRoom.querySelector('.preview-floor');
+          const table = previewRoom.querySelector('.preview-table');
+          
+          if (colorPrimary && colorPrimary.value !== 'ninguno' && walls) {
+            walls.style.backgroundColor = colorPrimary.value;
+          }
+          
+          if (colorSecondary && colorSecondary.value !== 'ninguno' && floor) {
+            floor.style.backgroundColor = colorSecondary.value;
+          }
+          
+          // Actualizar estilo según la selección
+          const selectedStyle = document.querySelector('.style-option.selected');
+          if (selectedStyle && table) {
+            const style = selectedStyle.getAttribute('data-style');
+            
+            switch(style) {
+              case 'rustico':
+                table.style.backgroundColor = '#8B4513';
+                break;
+              case 'minimalista':
+                table.style.backgroundColor = '#f0f0f0';
+                break;
+              case 'vintage':
+                table.style.backgroundColor = '#D2B48C';
+                break;
+              case 'boho':
+                table.style.backgroundColor = '#CD853F';
+                break;
+              default: // elegante
+                table.style.backgroundColor = '#a67c52';
+            }
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>
